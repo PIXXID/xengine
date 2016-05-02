@@ -1,0 +1,7 @@
+{
+    "name": "pixxid/xengine",
+    "description": "Micro Framework PHP",
+    "require": {
+        "php": ">=5.3.0"
+    }
+}

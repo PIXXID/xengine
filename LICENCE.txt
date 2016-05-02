@@ -1,0 +1,322 @@
+********************************************
+Framework PIXXID
+Copyright PIXXID (c) 2016
+********************************************
+
+CONTRAT DE LICENCE UTILISATEUR FINAL DU FRAMEWORK PIXXID XENGINE
+
+IMPORTANT : VEUILLEZ LIRE ATTENTIVEMENT LE PRESENT CONTRAT DE LICENCE UTILISATEUR
+FINAL CI-APRES (DESIGNE GLOBALEMENT PAR LA PRESENTE SOUS LE TERME : "CLUF")
+EN COCHANT LA CASE "J'accepte les termes de la licence", EN COPIANT, EN INSTALLANT
+OU EN UTILISANT LE FRAMEWORK EN TOUT OU EN PARTIE, VOUS ACCEPTEZ TOUTES LES
+DISPOSITIONS DU PRESENT CLUF Y COMPRIS, NOTAMMENT, LES LIMITATIONS RELATIVES A :
+L'UTILISATION DECRITE A L'ARTICLE 2 ; LES CONDITIONS DE TRANSFERT DECRITES A
+L'ARTICLE 3 ; LE RESPECT DES LICENCES A L'ARTICLE 4 ; LA GARANTIE DECRITE AUX
+ARTICLES 6 ET LA RESPONSABILITE DECRITE A L'ARTICLE 7 . VOUS RECONNAISSEZ QUE LE
+PRESENT CLUF REVET LE MEME CARACTERE QUE TOUT AUTRE CONTRAT ECRIT QUE VOUS AURIEZ
+NEGOCIE ET SIGNE.
+LE PRESENT CLUF VOUS EST OPPOSABLE, A VOUS ET A TOUTE SOCIETE AYANT OBTENU LE
+FRAMEWORK ET POUR LE COMPTE DE LAQUELLE IL EST UTILISE (PAR EXEMPLE, LE CAS ECHEANT,
+VOTRE EMPLOYEUR). SI VOUS N'ACCEPTEZ PAS LES DISPOSITIONS DU PRESENT CONTRAT,
+N'UTILISEZ PAS LE FRAMEWORK.
+
+Le présent CLUF est un accord légal et non-exclusif entre l'Utilisateur (personne
+physique ou personne morale unique) et PIXXID SARL concernant l?utilisation du
+FRAMEWORK (DESIGNES GLOBALEMENT PAR LA PRESENTE SOUS LE TERME : " FRAMEWORK ")
+qui incluent le logiciel informatique et tous matériels imprimés ou média
+électroniques ; pouvant inclure des supports associés, de la documentation
+imprimée et/ou électronique voire ?en ligne?.
+Vous pouvez avoir conclu un autre contrat écrit directement avec PIXXID
+comme un contrat de suivi logiciel (nommé également "CONTRAT DE LICENCE DU
+FRAMEWORK PIXXID") qui vient compléter et préciser le présent CLUF. .
+Le FRAMEWORK fait l?objet d?une concession de licence et non d?une vente.
+PIXXID vous autorise à copier, télécharger, installer, utiliser ou bénéficier
+d?une autre manière des fonctionnalités ou de la propriété intellectuelle relatives
+au FRAMEWORK uniquement conformément aux dispositions du présent CLUF.
+L?utilisation de certains éléments appartenant à des tiers inclus dans le FRAMEWORK
+peut être soumise à d'autres dispositions, généralement énoncées dans un contrat
+de licence distinct ou dans un fichier "Lisez-moi" fourni avec ces éléments.
+PIXXID et ses fournisseurs détiennent tous les droits de propriété intellectuelle
+liés au FRAMEWORK. A ce titre le FRAMEWORK est protégé par les lois internationales
+du droit d?auteur ainsi que par les traités de lois de propriété intellectuelle.
+
+1. DEFINITIONS
+* "PIXXID" désigne PIXXID SARL, société dément constituée conformément au droit
+français, sise 3 Impasse des Buisserattes, 69360 TERNAY.
+* "FRAMEWORK " désigne toutes les informations fournies avec le présent CLUF,
+y compris, notamment, les fichiers logiciels et autres données informatiques de
+PIXXID ou de tiers, (photographies, images, illustrations, fichiers son, clip
+arts et autres oeuvres artistiques), des fichiers et documents annexes écrits
+explicatifs (la "Documentation") ou sa version informatique (le "Didacticiel"),
+ainsi que toutes les versions modifiées des informations et leurs copies, ainsi
+que les mises à niveau, mises à jour et ajouts aux dites informations qui vous
+sont fournis par PIXXID à tout moment.
+* "NOMBRE AUTORISé" désigne le nombre total de licences valides concèdées par PIXXID.
+
+2. CONCESSION DE LICENCE
+PIXXID vous concède une Licence non exclusive d'utilisation du FRAMEWORK conformément
+à la documentation et aux fins qui y sont décrites, dans les conditions décrites
+ci-après. :
+
+2.1 Utilisation générale.
+Vous êtes autorisé à installer et à utiliser un exemplaire du FRAMEWORK sur vos
+Ordinateurs compatibles avec les CONDITIONS DE FONCTIONNEMENT, jusqu'à concurrence
+du NOMBRE AUTORISÉ.
+
+2.2 Utilisation sur un serveur.
+Vous pouvez installer une copie du FRAMEWORK sur un serveur de fichiers informatiques,
+afin d'utiliser le FRAMEWORK à partir de commandes, de données ou d'instructions
+(par exemple, des scripts) exécutées depuis un autre Ordinateur à travers un RESEAU
+INTERNE.
+Cependant le nombre total d'Utilisateurs (et non le nombre simultané d'Utilisateurs)
+qui bénéficient d'un droit d'utiliser le FRAMEWORK sur ce serveur de fichiers
+informatiques ne doit pas excéder le NOMBRE AUTORISÉ.
+Une LICENCE de FRAMEWORK ne peut être partagée ou utilisée simultanément sur plusieurs
+Ordinateurs.
+
+2.3 Utilisation sur un Ordinateur Portable ou Privé.
+L'Utilisateur principal de l'Ordinateur sur lequel le FRAMEWORK est installé,
+peut installer une seconde copie du FRAMEWORK exclusivement pour son utilisation
+personnelle sur un Ordinateur portable ou sur un Ordinateur privé installé à son
+domicile personnel, à condition que le FRAMEWORK installé sur cet Ordinateur
+portable ou privé ne soit pas en même temps utilisé sur l' Ordinateur principal".
+
+2.4 Titularité des Droits de Propriété Intellectuelle
+Le FRAMEWORK et toute copie autorisée que vous effectuez sont la propriété
+intellectuelle de PIXXID SARL et de ses fournisseurs. La structure, l'organisation
+et le code du FRAMEWORK constituent des secrets commerciaux et des informations
+confidentielles de valeur de PIXXID SARL et de ses fournisseurs.
+Le FRAMEWORK est protégé par la loi, y compris notamment par les lois américaines
+et d'autres pays sur le copyright [droit d'auteur], et par les dispositions des
+traités internationaux.
+Sauf disposition expresse des présentes, le présent CLUF ne vous concède aucun
+droit de propriété intellectuelle sur le FRAMEWORK, et PIXXID et ses fournisseurs
+se réservent tous les droits qui ne sont pas expressément concédés.
+Vous n'êtes pas autorisé à copier les documents imprimés accompagnant le FRAMEWORK.
+
+3. LIMITATIONS
+3.1 Mention de propriété
+Vous n'êtes pas autorisé à copier le FRAMEWORK ou sa documentation sauf dans le
+cadre des dispositions énoncées à l'Article 2.
+Toute copie autorisée du FRAMEWORK que vous effectuez doit contenir les mêmes
+mentions de copyright [droit d'auteur] et autres mentions de propriété que celles
+qui apparaissent dans ou sur le FRAMEWORK.
+Vous n'êtes pas autorisé à utiliser le FRAMEWORK dans le but de développer un
+logiciel ou une autre technologie possédant la même fonction de base que le
+FRAMEWORK, y compris (sans limite) l'utilisation du FRAMEWORK pour toute procédure
+de développement ou de test dont l'objectif est de développer un logiciel semblable
+ou une autre technologie, ou de déterminer si ce logiciel ou cette autre technologie
+fonctionne de la même façon que le FRAMEWORK.
+
+3.2 Modifications :
+-Sans accord écrit préalable de PIXXID, vous n'êtes pas autorisé à altérer, fusionner,
+modifier, adapter ou traduire le FRAMEWORK ni à décompiler, pratiquer de l'ingénierie
+inverse, désassembler ou réduire de quelque manière que ce soit le FRAMEWORK à
+une forme compréhensible ou essayer de toute autre façon de découvrir son code
+source, sauf dans la limite expressément autorisée par la loi applicable, et ce,
+uniquement à des fins d'interopérabilité du FRAMEWORK.
+
+3.3 Dégroupage:
+Il se peut que le FRAMEWORK contienne divers utilitaires, applications et composants,
+qu'il fonctionne avec des plates-formes ou des langages multiples, qu'il vous soit
+fourni sur plusieurs supports ou que vous en receviez plusieurs copies. Néanmoins,
+le FRAMEWORK est conçu, et vous est fourni, comme un seul produit que vous devez
+utiliser comme tel sur des Ordinateurs conformément aux dispositions de l'Article 2.
+Vous n'êtes pas obligé d'utiliser tous les composants du FRAMEWORK, mais sans accord
+écrit préalable de PIXXID,  vous ne pouvez pas dégrouper les composants du FRAMEWORK
+dans le but de les utiliser sur différents Ordinateurs ou Serveurs.
+Vous ne pouvez pas dégrouper ou réorganiser le FRAMEWORK à des fins de distribution,
+de transfert ou de revente.
+
+3.4 Transfert.
+Cette Licence d'utilisation vous est octroyée nominativement et ne peut être assignée
+ou transférée partiellement ou en totalité, de même que le FRAMEWORK sans l'accord
+préalable écrit de PIXXID.
+
+EN CONSEQUENCE, VOUS NE POUVEZ PAS LOUER OU DONNER EN CREDIT-BAIL, VENDRE, CONCEDER DES
+SOUS-LICENCES, CEDER OU TRANSFERER VOS DROITS RELATIFS AU FRAMEWORK, OU AUTORISER LA
+COPIE DE TOUT OU PARTIE DU FRAMEWORK SUR L'ORDINATEUR D'UN AUTRE UTILISATEUR OU SOCIETE
+SAUF AUTORISATION EXPRESSE STIPULEE DANS LES PRESENTES.
+
+Vous pouvez toutefois transférer tous vos droits d'utilisation du FRAMEWORK à une
+autre personne physique ou morale sous réserve de remplir ces 3 conditions :
+   a) vous transfériez également à ladite personne physique ou morale le présent
+    CLUF, le(s) numéro(s) de série, le FRAMEWORK et tous les autres logiciels ou
+    matériels intégrés, emballés ou pré-installés avec le FRAMEWORK, y compris toutes
+    les copies, mises à niveau, mises à jour et versions antérieures,
+   b) vous ne conserviez aucune mise à niveau, mise à jour ou copie, y compris les
+    copies de sauvegarde et celles stockées sur un Ordinateur,
+   c) le bénéficiaire accepte les dispositions du présent CLUF ainsi que toutes
+    les autres dispositions en vertu desquelles vous avez acheté une Licence valide
+    du FRAMEWORK.
+
+NONOBSTANT CE QUI PRECEDE, VOUS N'ETES EGALEMENT PAS AUTORISé A TRANSFERER LES
+COPIES DU FRAMEWORK DESTINéES A LA FORMATION, LA DOCUMENTATION ET/OU LE MANUEL
+D'UTILISATION, LES PRé-VERSIONS OU VERSIONS BETA, NI LES COPIES NON DESTINéES A LA VENTE.
+
+3.5 Location
+Sans l'accord préalable écrit de PIXXID, Le FRAMEWORK ne peut ni être loué ni faire
+l'objet d'un leasing, ni être utiliser dans une activité de location, d'utilisation
+en temps partagé, de services informatiques, ou de services en ligne.
+
+3.6 Restriction liées à l'Export
+En acceptant les termes du présent CLUF, vous vous soumettez à toutes les
+réglementations, restrictions relatives à l'Export et applicables selon les
+provisions FAR (par exemple : FAR 52.227-19 imposées par le gouvernement
+des Etats-Unis)
+
+
+4. RESPECT DES LICENCES.
+4.1 Engagement de conformité
+Vous vous engagez à dûment justifier et à certifier, dans les trentes (30) jours
+suivant toute demande de PIXXID ou d'un de ses représentants autorisés, qu'à la
+date de ladite demande, vous utilisez le FRAMEWORK PIXXID en conformité avec vos
+Licences en vigueur.
+
+4.2 Audit annuel
+Vous autoriserez PIXXID à conduire ou engager un audit annuel des enregistrements
+appropriés permettant de vérifier que vous vous conformez aux termes du présent CLUF.
+Un rapport d'audit commenté vous sera remis et le cas échéant vous vous engagez
+à vous mettre en conformité en acquittant le montant correspondant à l'acquisition
+des Licences complémentaires (au tarif en vigueur du moment) dans les trentes (30)
+jours suivant la remise de ce rapport.
+
+4.3 Durée
+Le présent CLUF entre en vigueur à compter de l'acceptation telle que décrite au
+début du présent contrat et reste applicable pendant une période d'un (1) an sauf
+résiliation anticipée dans les conditions prévues ci-dessous au paragraphe 4.4
+À la fin du premier terme, il sera automatiquement et tacitement renouvelé pour
+des termes successifs d'un (1) an,
+
+4.4 Résiliation
+Vous pouvez résilier le présent CLUF à n'importe quel moment.
+PIXXID se réserve le droit d?y mettre un terme en cas de rupture des termes ou
+conditions du présent CLUF sans préjudice de tous autres droits.
+A la résiliation de ce Contrat, vous vous engagez à détruire le FRAMEWORK et
+toutes les copies effectuées de celui-ci et à fournir à PIXXID une attestation
+écrite confirmant la destruction effectuée par vos soins, dans un délai de un (1)
+mois à compter de la date de résiliation.
+Les dispositions des Articles 6 et 7 resteront en vigueur en cas de résiliation
+du présent CLUF, quelle qu?en soit la cause, mais cela ne sous-entend pas ou ne
+crée pas des droits d?utilisation permanents du FRAMEWORK après la résiliation
+du présent CLUF.
+
+
+5. MISES A JOUR
+Si le FRAMEWORK est une mise à jour d?un produit PIXXID, vous pouvez utiliser ce
+produit mis à jour sous réserve de vous conformer aux termes du présent CLUF.
+le FRAMEWORK comprend une application Internet interactive, permettant une
+communication automatique via Internet avec le serveur de notre site afin de
+vérifier s'il existe des mises à jour disponibles de l?application, si l' Ordinateur
+sur lequel le FRAMEWORK est installé  dispose d?un accès à l?Internet valide.
+Cette fonction de communication n?est pas activée par défaut.
+En installant et/ou en utilisant le FRAMEWORK, l?Utilisateur accepte les fonctions
+de communication du FRAMEWORK. L?Utilisateur prend en charge, à titre exclusif,
+tous les frais de télécommunication et de connexion encourus lors de l?utilisation
+du FRAMEWORK.
+L'Utilisateur accepte le fait que le FRAMEWORK puisse télécharger automatiquement
+ou non des mises à jour ou des mises à niveau ou des nouvelles versions du FRAMEWORK
+et les installer comme faisant partie intégrante du FRAMEWORK. De telles mises à jour
+du FRAMEWORK sont également régies par le présent CLUF. Dans le cas contraire un
+nouveau CLUF sera soumis à l?Utilisateur pour acceptation.
+
+
+6. GARANTIES
+6.1 Garantie limitée
+PIXXID garantit à la personne physique ou morale qui la première a acheté une Licence
+du FRAMEWORK aux fins de l'utiliser sur des Ordinateurs conformément au présent CLUF,
+que le FRAMEWORK fonctionnera pour l?essentiel conformément à la Documentation pendant
+quatre-vingt dix (90) jours à compter de la réception du FRAMEWORK, à condition qu'il
+soit utilisé sur le système d?exploitation et dans la configuration matérielle
+recommandés. Toute garantie implicite relative au FRAMEWORK est limitée à cette
+période de quatre-vingt dix  (90) jours. De faibles variations de performances
+par rapport aux spécifications de la Documentation ne peuvent pas donner lieu à
+l'application de la présente garantie
+PIXXID ne garantit pas que les fonctions contenues dans le FRAMEWORK remplissent
+vos exigences ou que le FRAMEWORK soit fourni de manière continue ou exempt de
+toute erreur.
+
+REMARQUE IMPORTANTE : Le FRAMEWORK utilise des applications complémentaires pour
+le fonctionnement de certaines particularités du FRAMEWORK tels que l'accès à
+un RESEAU INTERNE, l'accès à une base de données... Ces applications sont libres
+de droit et sont soumises à un contrat de licence GNU (General Public License)
+distinct du présent CLUF et fourni avec ces éléments. Ces applications ne sont
+installées que pour facilité l'utilisation du FRAMEWORK.
+Applications installés dans le FRAMEWORK PIXXID
+
+
+-Malgré la fiabilité et les tests effectués, tous disfonctionnements, modifications,
+évolutions ou disparitions de l'une de ces applications ne peuvent pas donner lieu à
+l'application de la présente garantie. En aucun cas la responsabilité de PIXXID ne
+peut être engagée et PIXXID ne sera pas tenu d'y remédier.
+
+6.2 Recours de l'utilisateur final
+Si le FRAMEWORK n'est pas conforme à la description du paragraphe "Garantie limitée"
+ci-dessus, l'entière responsabilité de PIXXID, et votre seul et unique recours,
+se limitera, au choix de PIXXID au remplacement du FRAMEWORK ou au remboursement
+de la redevance que vous avez versée pour obtenir la Licence du FRAMEWORK
+La garantie du FRAMEWORK de remplacement ne dépassera pas la durée résiduelle
+de la période de la Garantie limitée d'origine. PIXXID limite son obligation à
+l?option de réparation ou de remplacement de tout produit défectueux.
+Toutes les demandes en garantie doivent être faites dans le délai de quatre-vingt-dix
+(90) jours susmentionné et être accompagnées d?une preuve d?achat.
+
+ 6.3 Exclusions
+PIXXID ET SES FOURNISSEURS EXCLUENT EXPRESSEMENT TOUTE AUTRE GARANTIE, CONDITION,
+DECLARATION OU CLAUSE, EXPRESSE OU IMPLICITE, CONTRACTUELLE, DE DROIT COMMUN, TIREE
+DE LA COUTUME, OU DES USAGES COMMERCIAUX OU AUTRE CONCERNANT TOUS SUJETS, Y COMPRIS
+NOTAMMENT, LA PERFORMANCE, LA SECURITE, LA NON-CONTREFACON DES DROITS D'UN TIERS,
+L'INTÉGRATION DU FRAMEWORK, SA QUALITÉ MARCHANDE, SA JOUISSANCE PAISIBLE, SA QUALITE
+SATISFAISANTE OU SA CONVENANCE À UN USAGE SPÉCIFIQUE.
+
+ LA GARANTIE LIMITEE EST ANNULEE SI LA DEFAILLANCE DU FRAMEWORK DECOULE D'UN ACCIDENT,
+D'UN USAGE ABUSIF OU D'UNE MAUVAISE UTILISATION.
+
+LA PRESENTE GARANTIE LIMITÉE NE S'APPLIQUE PAS AUX PROGRAMMES CORRECTIFS, VERSIONS
+PRÉLIMINAIRES (BETA), D'ESSAI OU D?ÉVALUATION, DEMARREURS, ÉCHANTILLONS DE PRODUITS
+ET COPIES DU FRAMEWORK INTERDITES À LA REVENTE (NFR), SITES WEB OU SERVICES EN LIGNE.
+
+
+7. RESPONSABILITE
+7.1 Décharge de responsabilité
+A l?exception du paragraphe précédent, PIXXID se décharge de toute responsabilité.
+PIXXID NE FORMULE AUCUNE AUTRE GARANTIE RELATIVE AU FRAMEWORK, QU'ELLE SOIT EXPRESSE
+OU IMPLICITE, Y COMPRIS MAIS NON-LIMITÉE AUX GARANTIES IMPLICITES DE COMMERCIALISATION,
+D'ADÉQUATION A UN USAGE PARTICULIER OU DE NON-VIOLATION DES DROITS D'UNE TIERCE PARTIE.
+CERTAINES JURIDICTIONS N'AUTORISENT PAS L'EXCLUSION DES GARANTIES IMPLICITES OU
+LES LIMITATIONS DE LA DUREE D'UNE GARANTIE IMPLICITE, OU L'EXCLUSION DE LA LIMITATION
+DES DOMMAGES ACCESSOIRES. PAR CONSEQUENT, LES LIMITATIONS OU EXCLUSIONS PEUVENT
+NE PAS VOUS CONCERNER. CETTE GARANTIE VOUS OCTROIE DES DROITS SPECIFIQUES, ET IL
+EST POSSIBLE QUE VOUS BENEFICIEZ D'AUTRES DROITS QUI VARIENT SELON LA JURIDICTION.
+
+7.2 Absence de responsabilité pour les dommages indirects
+PIXXID NE POURRA ETRE TENU POUR RESPONSABLE DE TOUTE PERTES, DOMMAGES, RÉCLAMATIONS
+OU QUELQUES FRAIS QUE CE SOIT, Y COMPRIS TOUS DOMMAGES CONSECUTIFS, INDIRECTS OU
+INCIDENTS, TOUT MANQUE À GAGNER, PERTES D?ECONOMIE, DOMMAGES RESULTANT DE
+L'INTERRUPTION D'ACTIVITE, D'UN PREJUDICE CORPOREL OU DU NON-RESPECT DE TOUTE
+OBLIGATION D'ATTENTION OU DE RECLAMATIONS D?UN TIERS, DECOULANT DE L'EXÉCUTION
+OU DE L'UTILISATION DU FRAMEWORK ET CE MÊME SI UN REPRÉSENTANT DE PIXXID A ÉTÉ
+INFORMÉ DE LA POSSIBILITÉ DE TELS DOMMAGES, PERTES, RÉCLAMATIONS OU FRAIS.
+
+7.3 Engagement maximum de responsabilité
+En tout état de cause, la responsabilité de PIXXID ne peut être engagée au-delà
+du montant affecté au FRAMEWORK conformément aux conditions de vente et aux termes
+du présent CLUF.
+
+8. DROIT APPLICABLE
+Le présent CLUF est exclusivement soumis au droit français.
+Il est formellement convenu que toute tolérance ou renonciation d?une des parties,
+dans l'application de tout ou partie des engagements prévus au présent contrat,
+quelles qu'en aient pu être la fréquence et la durée, ne saurait valoir modification
+du présent contrat.
+
+Tout litige concernant la formation, l'interprétation, l'exécution de la présente
+et/ou la réalisation de l'une quelconque de ses stipulations sera soumis aux
+tribunaux français compétents.
+
+
+9. SUPPORT TECHNIQUE
+Le support technique PIXXID fournit une assistance continue aux bénéficiaires du
+présent CLUF dans les conditions décrites dans le contrat de suivi logiciel appelé
+"CONTRAT DE LICENCE DU FRAMEWORK PIXXID" conclu séparément avec PIXXID.
+
