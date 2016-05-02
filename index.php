@@ -17,7 +17,7 @@ namespace xEngine;
 define('XENGINE_DIR', dirname(__FILE__));
 define('XENGINE_VERSION', "4");
 define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT']);
-define('APPS_ROOT', dirname(dirname(XENGINE_DIR)));
+define('APPS_ROOT', dirname(dirname(dirname(XENGINE_DIR))));
 define('CONFIG_DIR', APPS_ROOT . '/config/');
 define('LOGS_DIR', APPS_ROOT . '/logs/');
 define('RESSOURCES_DIR', APPS_ROOT . '/ressources/');
