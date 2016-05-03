@@ -119,9 +119,51 @@ class module {
     }
 
     /**
+     * Ajoute un controller au module
+     * @param string $moduleName
+     * @param string $controllerName
+     *
      * @return bool
      */
-    public function add() {
+    public function add($moduleName, $controllerName) {
+
+        // Répertoires des controllers et des vues
+        $controllersDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR;
+        $viewsDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
+
+        // On vérifie que le module existe
+        if (file_exists($this->modulesDir . $moduleName)) {
+            // On vérifie qu'un controller du même nom n'existe pas déjà
+            if (!file_exists($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'controllers'
+                            . DIRECTORY_SEPARATOR . $controllerName . '.controller.php')) {
+                // On crée le controller controllers/*.controller.php
+                if (file_put_contents($controllersDir . "{$controllerName}.controller.php", $this->getControllerFile($controllerName)) !== false) {
+                    // On crée la vue views/*.view.php
+                    if (file_put_contents($viewsDir . "{$controllerName}.view.php", $this->getViewFile("view")) !== false) {
+                        // On met à jour le fichier route.xml
+                        if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.xml', $controllerName)) {
+                            echo helper::success("Le controller {$controllerName} a été crée !\r\n");
+                            return true;
+                        }
+
+                        echo helper::warning("Impossible de mettre à jour le fichier {$this->modulesDir}{$moduleName}/route.xml !\r\n");
+                        return false;
+                    }
+
+                    echo helper::warning("Impossible de créer le fichier {$viewsDir}{$controllerName}.view.php !\r\n");
+                    return false;
+                }
+
+                echo helper::warning("Impossible de créer le fichier {$controllersDir}{$controllerName}.controller.php !\r\n");
+                return false;
+            }
+
+            echo helper::warning("Le controller {$moduleName}/controllers/{$controllerName}.controller.php existe déjà !\r\n");
+            return false;
+        }
+
+        echo helper::warning("Le module {$moduleName} n'existe pas !\r\n");
+        return false;
     }
 
     /**
@@ -197,9 +239,7 @@ EOF;
         $date = date('d/m/Y');
         $str = <<<EOF
 <?php
-
 /**
- *
  *
  * @name      $controllerName.action.php
  *
@@ -220,6 +260,7 @@ class $controllerName
     {
         try {
         } catch (\\Exception \$e) {
+            \$_DC->addMessageError(\$e->getMessage());
         }
 
         return;
@@ -231,8 +272,8 @@ EOF;
     }
 
     /**
-     * Retourne le template d'un controller
-     * @param string $controllerName
+     * Retourne le template de la vue d'un controller
+     * @param string $viewName
 
      * @return string
      */
@@ -277,6 +318,36 @@ EOF;
             }
         }
 
+        return false;
+    }
+
+    /**
+     * Mise à jour du fichier route.xml
+     * @param string $routeFile
+     * @param string $controllerName
+     *
+     * @return bool
+     */
+    public function updateRouteFile($routeFile, $controllerName) {
+        // On charge le fichier xml
+        if (($xml = simplexml_load_file($routeFile)) !== false) {
+            // On ajoute le controller
+            $child = $xml->controllers->addChild('controller');
+
+            // On positionne les attributs
+            $child->addAttribute('name', $controllerName);
+            $child->addAttribute('lib', "Controller pour {$controllerName}");
+
+            // On enregistre
+            if ($xml->asXML($routeFile) !== false) {
+                return true;
+            }
+
+            echo helper::warning("Impossible d'enregistrer le fichier {$routeFile} !\r\n");
+            return false;
+        }
+
+        echo helper::warning("Impossible de lire le fichier {$routeFile} !\r\n");
         return false;
     }
 }
