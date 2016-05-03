@@ -70,17 +70,22 @@ class module {
                         if (file_put_contents($controllersDir . "home.controller.php", $this->getControllerFile("home")) !== false) {
                             // Création de la vue du controller de base
                             if (file_put_contents($viewsDir . "home.view.php", $this->getViewFile("view")) !== false) {
-
-                                echo helper::success("Le module {$moduleName} a été initialisé !\r\n");
-                                echo helper::success("L'arborescence suivante a été créée :\r\n");
-                                echo helper::info("-- public/
+                                // Mise à jour du fichier config/router.php
+                                if ($this->updateRouterFile($moduleName)) {
+                                    echo helper::success("Le module {$moduleName} a été initialisé !\r\n");
+                                    echo helper::success("L'arborescence suivante a été créée :\r\n");
+                                    echo helper::info("-- public/
     -- {$moduleName}/
        -- controllers/
        -- views/
        index.php
        route.xml
 ");
-                                return true;
+                                    return true;
+                                }
+
+                                echo helper::warning("Impossible de mettre à jour le fichier config/router.php !\r\n");
+                                return false;
                             }
 
                             echo helper::warning("Impossible de créer le fichier {$viewsDir}home.view.php !\r\n");
@@ -237,6 +242,42 @@ EOF;
 EOF;
 
         return $str;
+    }
+
+    /**
+     * Mise à jour du fichier config/router.php
+     * @param string $moduleName
+     *
+     * @return bool
+     */
+    public function updateRouterFile($moduleName) {
+        // On lit le contenu du fichier, chaque ligne un élément de tableau
+        if (($lines = file($this->root . 'config/router.php')) !== false) {
+            // Contenu qui va être ajouté
+            $newLines = <<<EOF
+        '$moduleName' => [
+            'path' => '/$moduleName/',
+            'cache_name' => 'router.cache.json'
+        ],
+
+EOF;
+            // On boucle sur les lignes pour trouver 'routes' => [
+            foreach ($lines as $index => $line) {
+                if (strpos($line, "'routes' => [") !== false) {
+                    array_splice($lines, $index + 1, 0, [$newLines]);
+                    break;
+                }
+            }
+
+            $fileContent = implode($lines);
+
+            // On ré écrit le fichier
+            if (file_put_contents($this->root . 'config/router.php', $fileContent) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 
