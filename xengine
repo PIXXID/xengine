@@ -1,0 +1,55 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Gestion de l'application via la console
+ */
+
+namespace xEngine\Console;
+
+require_once(__DIR__ . '/console/helper.php');
+
+
+/**
+ * Charge dynamiquement les classes en fonction des paramètres de la console
+ */
+function CreateComponent($argv) {
+
+    $classname = '\xEngine\Console\\'. $argv[1];
+    $path = __DIR__ . "/console/" . $argv[1] . '.php';
+
+    if (file_exists($path)) {
+        include_once($path);
+
+        if (class_exists($classname)) {
+            $obj = new $classname();
+
+            if (sizeof($argv) == 2) {
+                $val = $obj->execute();
+            } else {
+                if (method_exists($obj, $argv[2])) {
+                    $code = '$val = $obj->' . $argv[2] . '(';
+                    foreach ($argv as $n => $arg) {
+                        if ($n > 2) {
+                            $code .= ($n > 3 ? ',' : '') . '$argv[' . $n . ']';
+                        }
+                    }
+
+                    $code .= ');';
+                    eval($code);
+                } else {
+                    echo $obj;
+                }
+            }
+        }
+    }
+
+    // En cas d'erreur, on affiche l'aide complète
+    if (!is_object($obj)) {
+        echo helper::help();
+        return -1;
+    }
+
+    return $obj;
+}
+
+$command = CreateComponent($argv);
