@@ -125,7 +125,12 @@ class module {
      *
      * @return bool
      */
-    public function add($moduleName, $controllerName) {
+    public function add($moduleName = null, $controllerName = null) {
+        // On vérifie les paramètres
+        if ($moduleName == null || $controllerName == null) {
+            echo helper::module(false, 'add');
+            return false;
+        }
 
         // Répertoires des controllers et des vues
         $controllersDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR;
