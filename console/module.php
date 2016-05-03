@@ -31,11 +31,13 @@ class module {
 
     /**
      * Création d'un nouveau module
+     * @param string $moduleName
+
      * @return bool
      */
     public function create($moduleName) {
         // On vérifie qu'un même module n'existe pas déjà
-        if (!file_exists($this->moduleDir . $moduleName)) {
+        if (!file_exists($this->modulesDir . $moduleName)) {
             /*
              * On crée l'arborescence :
              * -- public/
@@ -113,9 +115,51 @@ class module {
     }
 
     /**
+     * Suppression d'un module complet
+     * @param string $moduleName
+     *
      * @return bool
      */
-    public function destroy() {
+    public function destroy($moduleName = null) {
+        echo helper::info("Fonctionnalité non disponible !\r\n");
+        return false;
+
+        // On vérifie les paramètres
+        if ($moduleName == null) {
+            echo helper::module(false, 'destroy');
+            return false;
+        }
+
+        // On regarde si le module existe
+        if (file_exists($this->modulesDir . $moduleName)) {
+            // On demande confirmation à l'utilisateur
+            echo helper::warning("ATTENTION - Vous êtes sur le point de supprimer le module {$thisd->modulesDir}{$moduleName}.\r\n")
+                . helper::warning("Entrez 'oui' pour confirmer.\r\n")
+                . helper::info(">> ");
+            $input = trim(fgets(STDIN));
+
+            // On vérifie l'input fourni par l'utilisateur
+            if ($input === 'oui') {
+                // On supprime le répertoire du module
+                // TODO recursive
+                if (unlink($this->modulesDir . $moduleName)) {
+                    // On indique qu'il faut mettre à jour le fichier config/route.php
+
+                    echo helper::success("Le module {$this->modulesDir}{$moduleName} a bien été supprimé !\r\n");
+                    echo helper::info("Pensez à modifier le fichier config/route.php en conséquence.\r\n");
+                    return true;
+                }
+
+                echo helper::warning("Erreur lors de la suppression du répertoire {$this->modulesDir}{$moduleName} !\r\n");
+                return false;
+            }
+
+            echo helper::info("Suppression annulée.\r\n");
+            return false;
+        }
+
+        echo helper::warning("Le module {$this->modulesDir}{$moduleName} n'existe pas !\r\n");
+        return false;
     }
 
     /**
