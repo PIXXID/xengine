@@ -38,44 +38,59 @@ class helper {
             $msg = helper::success("Usage : ");
         }
 
-        $msg .= helper::success("php xengine init\r\n");
+        $msg .= helper::success("php xengine init")
+             . helper::standard("  --  Initialisation du projet\r\n");
 
         return $msg;
     }
 
     /**
      * Aide de module, pour la création de module
+     * @param bool $full
+     * @param string $section
+     *
+     * @return string
      */
-    public static function module($full = false) {
+    public static function module($full = false, $section = null) {
         if ($full) {
             $msg = helper::info("[module]\r\n");
         } else {
             $msg = helper::success("Usage : ");
         }
 
-        $msg .= helper::success("php xengine module ")
-             . helper::warning("[create|destroy|add|remove] moduleName (controllerName)")
-             . "\r\n";
+        if ($section === null) {
+            $msg .= helper::success("php xengine module ")
+                 . helper::warning("[create|destroy|add|remove] moduleName (controllerName)")
+                 . "\r\n";
+        }
 
-        $msg .= helper::warning("[create]\r\n")
-            . helper::success("  php xengine module create moduleName ")
-            . helper::standard("  --  Création de l'arborescence du module 'moduleName'")
-            . "\r\n";
+        if ($section === null || $section === 'create') {
+            $msg .= helper::warning("[create]\r\n")
+                . helper::success("  php xengine module create moduleName ")
+                . helper::standard("  --  Création de l'arborescence du module 'moduleName'")
+                . "\r\n";
+        }
 
-        $msg .= helper::warning("[destroy]\r\n")
-            . helper::success("  php xengine module destroy moduleName ")
-            . helper::standard("  --  Suppression du module 'moduleName'")
-            . "\r\n";
+        if ($section === null || $section === 'destroy') {
+            $msg .= helper::warning("[destroy]\r\n")
+                . helper::success("  php xengine module destroy moduleName ")
+                . helper::standard("  --  Suppression du module 'moduleName'")
+                . "\r\n";
+        }
 
-        $msg .= helper::warning("[add]\r\n")
-            . helper::success("  php xengine module add moduleName controllerName")
-            . helper::standard("  --  Ajout de l'action 'controllerName' dans le module 'moduleName'")
-            . "\r\n";
+        if ($section === null || $section === 'add') {
+            $msg .= helper::warning("[add]\r\n")
+                . helper::success("  php xengine module add moduleName controllerName")
+                . helper::standard("  --  Ajout de l'action 'controllerName' dans le module 'moduleName'")
+                . "\r\n";
+        }
 
-        $msg .= helper::warning("[remove]\r\n")
-            . helper::success("  php xengine module remove moduleName controllerName")
-            . helper::standard("  --  Suppression de l'action 'controllerName' dans le module 'moduleName'")
-            . "\r\n";
+        if ($section === null || $section === 'remove') {
+            $msg .= helper::warning("[remove]\r\n")
+                . helper::success("  php xengine module remove moduleName controllerName")
+                . helper::standard("  --  Suppression de l'action 'controllerName' dans le module 'moduleName'")
+                . "\r\n";
+        }
 
         return $msg;
     }
