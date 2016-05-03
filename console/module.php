@@ -172,9 +172,63 @@ class module {
     }
 
     /**
+     * Supprime un controller du module
+     * @param string $moduleName
+     * @param string $controllerName
+     *
      * @return bool
      */
-    public function remove() {
+    public function remove($moduleName = null, $controllerName = null) {
+        // On vérifie les paramètres
+        if ($moduleName == null || $controllerName == null) {
+            echo helper::module(false, 'remove');
+            return false;
+        }
+
+        // Répertoires des controllers et des vues
+        $controllersDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR;
+        $viewsDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
+
+        // On vérifie que le controller existe
+        if (file_exists($controllersDir . "{$controllerName}.controller.php") !== false) {
+            // On demande confirmation à l'utilisateur
+            echo helper::warning("ATTENTION - Vous êtes sur le point de supprimer le controller {$controllersDir}{$controllerName}.controller.php.\r\n")
+                . helper::warning("Entrez 'oui' pour confirmer.\r\n")
+                . helper::info(">> ");
+            $input = trim(fgets(STDIN));
+
+            // On vérifie l'input fourni par l'utilisateur
+            if ($input === 'oui') {
+                // Supprime le fichier *.controller.php
+                if (unlink($controllersDir . "{$controllerName}.controller.php")) {
+                    // On supprime la vue associée si elle existe
+                    if (file_exists($viewsDir . "{$controllerName}.view.php") !== false) {
+                        if (!unlink($viewsDir . "{$controllerName}.view.php")) {
+                            echo helper::warning("Impossible de supprimer le fichier {$viewsDir}{$controllerName}.view.php !\r\n");
+                            return false;
+                        }
+                    }
+
+                    // On met à jour le fichier route.xml
+                    if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.xml', $controllerName, false)) {
+                        echo helper::success("Le controller a bien été supprimé.\r\n");
+                        return true;
+                    }
+
+                    echo helper::warning("Impossible de mettre à jour le fichier {$this->modulesDir}{$moduleName}/route.xml !\r\n");
+                    return false;
+                }
+
+                echo helper::warning("Impossible de supprimer le fichier {$controllersDir}{$controllerName}.controller.php !\r\n");
+                return false;
+            }
+
+            echo helper::info("Suppression annulée.\r\n");
+            return false;
+        }
+
+        echo helper::warning("Le controller {$controllersDir}{$controllerName}.controller.php n'existe pas !\r\n");
+        return false;
     }
 
     /**
@@ -330,18 +384,35 @@ EOF;
      * Mise à jour du fichier route.xml
      * @param string $routeFile
      * @param string $controllerName
+     * @param bool $add
      *
      * @return bool
      */
-    public function updateRouteFile($routeFile, $controllerName) {
+    public function updateRouteFile($routeFile, $controllerName, $add = true) {
         // On charge le fichier xml
         if (($xml = simplexml_load_file($routeFile)) !== false) {
-            // On ajoute le controller
-            $child = $xml->controllers->addChild('controller');
+            // Si c'est un ajout
+            if ($add) {
+                // On ajoute le controller
+                $child = $xml->controllers->addChild('controller');
 
-            // On positionne les attributs
-            $child->addAttribute('name', $controllerName);
-            $child->addAttribute('lib', "Controller pour {$controllerName}");
+                // On positionne les attributs
+                $child->addAttribute('name', $controllerName);
+                $child->addAttribute('lib', "Controller pour {$controllerName}");
+            // Sinon c'est une suppression
+            } else {
+                $index = 0;
+                // On boucle sur les $controllers jusqu'à trouver celui qui correspond
+                foreach ($xml->controllers->controller as $controller) {
+                    // On le supprime
+                    if ((string)$controller['name'] === $controllerName) {
+                        unset($xml->controllers->controller[$index]);
+                        break;
+                    }
+
+                    $index++;
+                }
+            }
 
             // On enregistre
             if ($xml->asXML($routeFile) !== false) {
