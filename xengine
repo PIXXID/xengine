@@ -6,6 +6,7 @@
 
 namespace xEngine\Console;
 
+date_default_timezone_set('Europe/Paris');
 require_once(__DIR__ . '/console/helper.php');
 
 
@@ -24,7 +25,11 @@ function CreateComponent($argv) {
             $obj = new $classname();
 
             if (sizeof($argv) == 2) {
-                $val = $obj->execute();
+                if (method_exists($obj, 'execute')) {
+                    $val = $obj->execute();
+                } else {
+                    echo $obj;
+                }
             } else {
                 if (method_exists($obj, $argv[2])) {
                     $code = '$val = $obj->' . $argv[2] . '(';

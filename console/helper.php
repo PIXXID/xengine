@@ -1,4 +1,8 @@
 <?php
+/**
+ * Affichage des différents messages d'aide des modules
+ *
+ */
 
 namespace xEngine\Console;
 
@@ -50,7 +54,7 @@ class helper {
         }
 
         $msg .= helper::success("php xengine module ")
-             . helper::warning("[create|destroy|add|remove] moduleName (actionName)")
+             . helper::warning("[create|destroy|add|remove] moduleName (controllerName)")
              . "\r\n";
 
         $msg .= helper::warning("[create]\r\n")
@@ -64,13 +68,13 @@ class helper {
             . "\r\n";
 
         $msg .= helper::warning("[add]\r\n")
-            . helper::success("  php xengine module add moduleName actionName")
-            . helper::standard("  --  Ajout de l'action 'actionName' dans le module 'moduleName'")
+            . helper::success("  php xengine module add moduleName controllerName")
+            . helper::standard("  --  Ajout de l'action 'controllerName' dans le module 'moduleName'")
             . "\r\n";
 
         $msg .= helper::warning("[remove]\r\n")
-            . helper::success("  php xengine module remove moduleName actionName")
-            . helper::standard("  --  Suppression de l'action 'actionName' dans le module 'moduleName'")
+            . helper::success("  php xengine module remove moduleName controllerName")
+            . helper::standard("  --  Suppression de l'action 'controllerName' dans le module 'moduleName'")
             . "\r\n";
 
         return $msg;
