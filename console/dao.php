@@ -86,45 +86,54 @@ class dao {
      * @param string $option2
      * @param string $option3
      * @param string $option4
+     * @param string $option5
      *
      * @return bool
      */
-    public function generate($option1 = null, $option2 = null, $option3 = null, $option4 = null) {
+    public function generate($option1 = null, $option2 = null, $option3 = null, $option4 = null, $option5 = null) {
 
         // On gère les différentes options passées
         $generateAllModels = false;
         $generateDao = false;
         $generateDaoCust = false;
         $generateBusiness = false;
+        $verbose = false;
         $model = null;
 
         // On génère tous les modèles ?
-        if ($option1 === '-a' || $option2 === '-a' || $option2 === '-a' || $option4 === '-a') {
+        if ($option1 === '-a' || $option2 === '-a' || $option3 === '-a' || $option4 === '-a' || $option5 === '-a') {
             $generateAllModels = true;
         // On regarde maintenant si un modèle particulier a été demandé
-        } elseif ($option1 != null && !in_array($option1, '-a', '-b', '-d', '-dc')) {
+        } elseif ($option1 != null && !in_array($option1, array('-a', '-b', '-d', '-dc', '-v'))) {
             $model = $option1;
-        } elseif ($option2 != null && !in_array($option2, '-a', '-b', '-d', '-dc')) {
+        } elseif ($option2 != null && !in_array($option2, array('-a', '-b', '-d', '-dc', '-v'))) {
             $model = $option2;
-        } elseif ($option3 != null && !in_array($option3, '-a', '-b', '-d', '-dc')) {
+        } elseif ($option3 != null && !in_array($option3, array('-a', '-b', '-d', '-dc', '-v'))) {
             $model = $option3;
-        } elseif ($option4 != null && !in_array($option4, '-a', '-b', '-d', '-dc')) {
+        } elseif ($option4 != null && !in_array($option4, array('-a', '-b', '-d', '-dc', '-v'))) {
             $model = $option4;
+        } elseif ($option5 != null && !in_array($option5, array('-a', '-b', '-d', '-dc', '-v'))) {
+            $model = $option5;
         }
 
         // On génère les dao ?
-        if ($option1 === '-d' || $option2 === '-d' || $option2 === '-d' || $option4 === '-d') {
+        if ($option1 === '-d' || $option2 === '-d' || $option3 === '-d' || $option4 === '-d' || $option5 === '-d') {
             $generateDao = true;
         }
 
         // On génère les daoCust ?
-        if ($option1 === '-dc' || $option2 === '-dc' || $option2 === '-dc' || $option4 === '-dc') {
+        if ($option1 === '-dc' || $option2 === '-dc' || $option3 === '-dc' || $option4 === '-dc' || $option5 === '-dc') {
             $generateDaoCust = true;
         }
 
         // On génère les business ?
-        if ($option1 === '-b' || $option2 === '-b' || $option2 === '-b' || $option4 === '-b') {
-            $generateDaoCust = true;
+        if ($option1 === '-b' || $option2 === '-b' || $option3 === '-b' || $option4 === '-b' || $option5 === '-b') {
+            $generateBusiness = true;
+        }
+
+        // On affiche le détail ?
+        if ($option1 === '-v' || $option2 === '-v' || $option3 === '-v' || $option4 === '-v' || $option5 === '-v') {
+            $verbose = true;
         }
 
         // Si aucune option n'a été passée, on génère tous les dao
@@ -160,29 +169,41 @@ class dao {
             }
         // Sinon on les prend tous automatiquement
         } else {
+            if ($verbose) {
+                echo helper::info("Génération de tous les modèles\r\n");
+            }
             foreach ($tables as $table) {
                 $models[] = $table[0];
             }
         }
-
 
         // On va créer chaque modèle
         foreach ($models as $model) {
             try {
             $columns = $this->listColumns($model);
             $fullColumns = $this->prepareColumns($model, $columns);
+
             // Création du fichier business
             if ($generateBusiness) {
+                if ($verbose) {
+                    echo helper::info("Génération du fichier business de {$model}\r\n");
+                }
                 writeBusiness::write($model, $fullColumns);
             }
 
             // Création du fichier dao
             if ($generateDao) {
+                if ($verbose) {
+                    echo helper::info("Génération du fichier dao de {$model}\r\n");
+                }
                 writeDao::write($model, $fullColumns);
             }
 
             // Création du fichier daoCust
             if ($generateDaoCust) {
+                if ($verbose) {
+                    echo helper::info("Génération du fichier daoCust de {$model}\r\n");
+                }
                 writeDaoCust::write($model, $fullColumns);
             }
 
@@ -191,6 +212,13 @@ class dao {
                 return false;
             }
 
+        }
+
+        // Si des modèles ont été générés, on l'indique
+        if (sizeof($models)) {
+            echo helper::success("Génération terminée.\r\n");
+        } else {
+            echo helper::warning("Aucun modèle généré.\r\n");
         }
 
         return true;
