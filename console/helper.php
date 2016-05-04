@@ -24,6 +24,7 @@ class helper {
     public static function help() {
         $msg = helper::init(true);
         $msg .= helper::module(true);
+        $msg .= helper::dao(true);
 
         return $msg;
     }
@@ -41,8 +42,8 @@ class helper {
             $msg = helper::success("Usage : ");
         }
 
-        $msg .= helper::success("php xengine init")
-             . helper::standard("  --  Initialisation du projet\r\n");
+        $msg .= helper::success("php xengine init\r\n")
+             . helper::standard("    Initialisation du projet\r\n");
 
         return $msg;
     }
@@ -69,29 +70,29 @@ class helper {
 
         if ($section === null || $section === 'create') {
             $msg .= helper::warning("[create]\r\n")
-                . helper::success("  php xengine module create moduleName ")
-                . helper::standard("  --  Création de l'arborescence du module 'moduleName'")
+                . helper::success("  php xengine module create moduleName\r\n")
+                . helper::standard("    Création de l'arborescence du module 'moduleName'")
                 . "\r\n";
         }
 
         if ($section === null || $section === 'destroy') {
             $msg .= helper::warning("[destroy]\r\n")
-                . helper::success("  php xengine module destroy moduleName ")
-                . helper::standard("  --  Suppression du module 'moduleName'")
+                . helper::success("  php xengine module destroy moduleName\r\n")
+                . helper::standard("    Suppression du module 'moduleName'")
                 . "\r\n";
         }
 
         if ($section === null || $section === 'add') {
             $msg .= helper::warning("[add]\r\n")
-                . helper::success("  php xengine module add moduleName controllerName")
-                . helper::standard("  --  Ajout de l'action 'controllerName' dans le module 'moduleName'")
+                . helper::success("  php xengine module add moduleName controllerName\r\n")
+                . helper::standard("    Ajout de l'action 'controllerName' dans le module 'moduleName'")
                 . "\r\n";
         }
 
         if ($section === null || $section === 'remove') {
             $msg .= helper::warning("[remove]\r\n")
-                . helper::success("  php xengine module remove moduleName controllerName")
-                . helper::standard("  --  Suppression de l'action 'controllerName' dans le module 'moduleName'")
+                . helper::success("  php xengine module remove moduleName controllerName\r\n")
+                . helper::standard("    Suppression de l'action 'controllerName' dans le module 'moduleName'")
                 . "\r\n";
         }
 
@@ -114,26 +115,20 @@ class helper {
 
         if ($section === null) {
             $msg .= helper::success("php xengine dao ")
-                 . helper::warning("[generate|update] (modelName)")
+                 . helper::warning("[generate] (modelName)")
                  . "\r\n";
         }
 
         if ($section === null || $section === 'generate') {
             $msg .= helper::warning("[generate]")
-                 . helper::success("  php xengine generate [-a|modelName] [-b] [-d] [-dc]\r\n")
+                 . helper::success("  php xengine generate [-a|modelName] [-b] [-d] [-dc] [-v]\r\n")
                  . helper::standard("  Génère tous les DAO non générés, ou bien seulement celui de 'modelName'\r\n")
                  . helper::standard("    [-a] Tous les modèles\r\n")
                  . helper::standard("    [modelName] Pour le modèle 'modelName'\r\n")
                  . helper::standard("    [-b] Fichiers business\r\n")
                  . helper::standard("    [-d] Fichiers dao\r\n")
-                 . helper::standard("    [-dc] Fichiers daoCust")
-                 . "\r\n";
-        }
-
-        if ($section === null || $section === 'update') {
-            $msg .= helper::warning("[update]")
-                 . helper::success("  php xengine update (modelName)\r\n")
-                 . helper::standard("    Met à jour tous les DAO, ou bien seulement celui de 'modelName'")
+                 . helper::standard("    [-dc] Fichiers daoCust\r\n")
+                 . helper::standard("    [-v] Affiche le détail")
                  . "\r\n";
         }
 
