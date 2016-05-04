@@ -74,16 +74,22 @@ class module {
                             if (file_put_contents($viewsDir . "home.view.php", $this->getViewFile("view")) !== false) {
                                 // Mise à jour du fichier config/router.php
                                 if ($this->updateRouterFile($moduleName)) {
-                                    echo helper::success("Le module {$moduleName} a été initialisé !\r\n");
-                                    echo helper::success("L'arborescence suivante a été créée :\r\n");
-                                    echo helper::info("-- public/
+                                    // Mise à jour du fichier .htaccess
+                                    if (file_put_contents($this->root . 'public' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . '.htaccess',
+                                        "\r\nRewriteRule ^/{$moduleName}/(.*)$ /{$moduleName}/index.php [L]", FILE_APPEND)) {
+                                        echo helper::success("Le module {$moduleName} a été initialisé !\r\n");
+                                        echo helper::success("L'arborescence suivante a été créée :\r\n");
+                                        echo helper::info("-- public/
     -- {$moduleName}/
        -- controllers/
        -- views/
        index.php
        route.xml
 ");
-                                    return true;
+                                        return true;
+                                    }
+                                    echo helper::warning("Impossible de mettre à jour le fichier public/vendor/.htaccess !\r\n");
+                                    return false;
                                 }
 
                                 echo helper::warning("Impossible de mettre à jour le fichier config/router.php !\r\n");
