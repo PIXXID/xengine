@@ -7,7 +7,7 @@
  * @name	datadict.inc.php
  * @author	D.M <dmeireles@pixxid.fr>
  * @copyright	D.M 18/09/2006
- * @package	xEngine.database.daogenerator
+ * @package	PixEngine.database.daogenerator
  * @version	1.0
  */
 $databaseType = array("char",
@@ -53,3 +53,4 @@ $paramLetters = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
     "an", "ao", "ap", "ak", "ar", "as", "at", "au", "av", "aw",
     "ax", "ay", "az", "ba", "bb", "bc", "bd", "be", "bf", "bg",
     "bh", "bi", "bj", "bk", "bl", "bm", "bn", "bo", "bq", "br");
+?>

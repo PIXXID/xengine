@@ -30,6 +30,9 @@ class helper {
 
     /**
      * Aide de l'init
+     * @param bool $full
+     *
+     * @return string
      */
     public static function init($full = false) {
         if ($full) {
@@ -90,6 +93,43 @@ class helper {
                 . helper::success("  php xengine module remove moduleName controllerName")
                 . helper::standard("  --  Suppression de l'action 'controllerName' dans le module 'moduleName'")
                 . "\r\n";
+        }
+
+        return $msg;
+    }
+
+    /**
+     * Aide du dao
+     * @param bool $full
+     * @param string $section
+     *
+     * @return string
+     */
+    public static function dao($full = true, $section = null) {
+        if ($full) {
+            $msg = helper::info("[dao]\r\n");
+        } else {
+            $msg = helper::success("Usage : ");
+        }
+
+        if ($section === null) {
+            $msg .= helper::success("php xengine dao ")
+                 . helper::warning("[generate|update] (modelName)")
+                 . "\r\n";
+        }
+
+        if ($section === null || $section === 'generate') {
+            $msg .= helper::warning("[generate]")
+                 . helper::success("  php xengine generate (modelName)")
+                 . helper::standard("  --  Génère tous les DAO non générés, ou bien seulement celui de 'modelName'")
+                 . "\r\n";
+        }
+
+        if ($section === null || $section === 'update') {
+            $msg .= helper::warning("[update]")
+                 . helper::success("  php xengine update (modelName)")
+                 . helper::standard("  --  Met à jour tous les DAO, ou bien seulement celui de 'modelName'")
+                 . "\r\n";
         }
 
         return $msg;
