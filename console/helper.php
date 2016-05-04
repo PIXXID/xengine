@@ -120,15 +120,20 @@ class helper {
 
         if ($section === null || $section === 'generate') {
             $msg .= helper::warning("[generate]")
-                 . helper::success("  php xengine generate (modelName)")
-                 . helper::standard("  --  Génère tous les DAO non générés, ou bien seulement celui de 'modelName'")
+                 . helper::success("  php xengine generate [-a|modelName] [-b] [-d] [-dc]\r\n")
+                 . helper::standard("  Génère tous les DAO non générés, ou bien seulement celui de 'modelName'\r\n")
+                 . helper::standard("    [-a] Tous les modèles\r\n")
+                 . helper::standard("    [modelName] Pour le modèle 'modelName'\r\n")
+                 . helper::standard("    [-b] Fichiers business\r\n")
+                 . helper::standard("    [-d] Fichiers dao\r\n")
+                 . helper::standard("    [-dc] Fichiers daoCust")
                  . "\r\n";
         }
 
         if ($section === null || $section === 'update') {
             $msg .= helper::warning("[update]")
-                 . helper::success("  php xengine update (modelName)")
-                 . helper::standard("  --  Met à jour tous les DAO, ou bien seulement celui de 'modelName'")
+                 . helper::success("  php xengine update (modelName)\r\n")
+                 . helper::standard("    Met à jour tous les DAO, ou bien seulement celui de 'modelName'")
                  . "\r\n";
         }
 

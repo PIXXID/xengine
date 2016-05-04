@@ -82,54 +82,118 @@ class dao {
 
     /**
      * Génère les dao pour l'ensemble des tables (ou seulement moduleName)
-     * @param string $option
+     * @param string $option1
+     * @param string $option2
+     * @param string $option3
+     * @param string $option4
+     *
+     * @return bool
      */
-    public function generate($option = null) {
+    public function generate($option1 = null, $option2 = null, $option3 = null, $option4 = null) {
+
+        // On gère les différentes options passées
+        $generateAllModels = false;
+        $generateDao = false;
+        $generateDaoCust = false;
+        $generateBusiness = false;
+        $model = null;
+
+        // On génère tous les modèles ?
+        if ($option1 === '-a' || $option2 === '-a' || $option2 === '-a' || $option4 === '-a') {
+            $generateAllModels = true;
+        // On regarde maintenant si un modèle particulier a été demandé
+        } elseif ($option1 != null && !in_array($option1, '-a', '-b', '-d', '-dc')) {
+            $model = $option1;
+        } elseif ($option2 != null && !in_array($option2, '-a', '-b', '-d', '-dc')) {
+            $model = $option2;
+        } elseif ($option3 != null && !in_array($option3, '-a', '-b', '-d', '-dc')) {
+            $model = $option3;
+        } elseif ($option4 != null && !in_array($option4, '-a', '-b', '-d', '-dc')) {
+            $model = $option4;
+        }
+
+        // On génère les dao ?
+        if ($option1 === '-d' || $option2 === '-d' || $option2 === '-d' || $option4 === '-d') {
+            $generateDao = true;
+        }
+
+        // On génère les daoCust ?
+        if ($option1 === '-dc' || $option2 === '-dc' || $option2 === '-dc' || $option4 === '-dc') {
+            $generateDaoCust = true;
+        }
+
+        // On génère les business ?
+        if ($option1 === '-b' || $option2 === '-b' || $option2 === '-b' || $option4 === '-b') {
+            $generateDaoCust = true;
+        }
+
+        // Si aucune option n'a été passée, on génère tous les dao
+        if (!$generateBusiness && !$generateDao && !$generateDaoCust) {
+            $generateBusiness = true;
+            $generateDao = true;
+            $generateDaoCust = true;
+        }
+
         $models = array();
         // Récupère l'ensemble des tables de la base
-        if ($option == null || $option === '--all') {
-            $tables = $this->listTables();
+        $tables = $this->listTables();
 
-            // On liste les tables afin que l'utilisateur valide celles qu'il veut, si l'option --all n'a pas été passée
-            if ($option !== '--all') {
-                echo helper::warning("Veuillez sélectionner les modèles à générer. Tappez [ENTER]/[o] pour valider le modèle, [n] pour le rejeter.\r\n");
-                foreach ($tables as $table) {
-                    echo helper::success($table[0] . "\r\n");
-                    echo helper::info(">> ");
-                    $input = trim(fgets(STDIN));
-                    if (!in_array($input, array('n', 'N', 'no', 'NO', 'NON', 'non'))) {
-                        $models[] = $table[0];
-                    }
-                }
-            // Sinon on les prend tous automatiquement
-            } else {
-                foreach ($tables as $table) {
+        // On liste les tables afin que l'utilisateur valide celles qu'il veut, si l'option -a n'a pas été passée
+        if (!$generateAllModels && $model === null) {
+            echo helper::warning("Veuillez sélectionner les modèles à générer. Tappez [ENTER]/[o] pour valider le modèle, [n] pour le rejeter.\r\n");
+            foreach ($tables as $table) {
+                echo helper::success($table[0] . "\r\n");
+                echo helper::info(">> ");
+                $input = trim(fgets(STDIN));
+                if (!in_array($input, array('n', 'N', 'no', 'NO', 'NON', 'non'))) {
                     $models[] = $table[0];
                 }
             }
-
-            // On va créer chaque modèle
-            foreach ($models as $model) {
-                try {
-                $columns = $this->listColumns($model);
-                $fullColumns = $this->prepareColumns($model, $columns);
-                // Création du fichier business
-                writeBusiness::write($model, $fullColumns);
-                // Création du fichier dao
-                writeDao::write($model, $fullColumns);
-                // Création du fichier daoCust
-                writeDaoCust::write($model, $fullColumns);
-                } catch (\Exception $e) {
-                    echo helper::error("Génération pour {$model} : {$e->getMessage()}\r\n");
-                    return false;
+        // Si c'est un modèle particulier demandé
+        } elseif ($model !== null) {
+            // On vérifie que le modèle demandé est présent dans la liste des tables
+            foreach ($tables as $table) {
+                if (strtolower($model) === strtolower($table[0])) {
+                    $models[] = $table[0];
+                    break;
                 }
+            }
+        // Sinon on les prend tous automatiquement
+        } else {
+            foreach ($tables as $table) {
+                $models[] = $table[0];
+            }
+        }
 
+
+        // On va créer chaque modèle
+        foreach ($models as $model) {
+            try {
+            $columns = $this->listColumns($model);
+            $fullColumns = $this->prepareColumns($model, $columns);
+            // Création du fichier business
+            if ($generateBusiness) {
+                writeBusiness::write($model, $fullColumns);
             }
 
-            return true;
-        } else {
-            return true;
+            // Création du fichier dao
+            if ($generateDao) {
+                writeDao::write($model, $fullColumns);
+            }
+
+            // Création du fichier daoCust
+            if ($generateDaoCust) {
+                writeDaoCust::write($model, $fullColumns);
+            }
+
+            } catch (\Exception $e) {
+                echo helper::error("Génération pour {$model} : {$e->getMessage()}\r\n");
+                return false;
+            }
+
         }
+
+        return true;
     }
 
     /**
