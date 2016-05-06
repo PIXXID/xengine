@@ -55,6 +55,11 @@ class init {
             $exists = true;
         }
 
+        if (file_exists($root . 'xengine')) {
+            $msg .= helper::warning("Le lien symbolique 'xengine' existe, risque d'écrasement de fichiers existants.\r\n");
+            $exists = true;
+        }
+
         // Si les dossiers existaient déjà, on s'arrête
         if ($exists) {
             $msg = helper::error("Une erreur est survenue !\r\n") . $msg;
@@ -85,10 +90,12 @@ class init {
      -- locale/
          -- fr_FR/
      -- models/\r\n");
-            return 0;
+            echo helper::success("Un lien symbolique a été créé vers le binaire vendor/pixxid/xengine/xengine dans la racine de votre projet.\r\n");
+
+            return true;
         }
 
-        return -1;
+        return false;
 
     }
 
@@ -101,7 +108,9 @@ class init {
         if ($this->generateConfig($root)) {
             if ($this->generateLogs($root)) {
                 if ($this->generatePublic($root)) {
-                   return $this->generateRessources($root);
+                    if ($this->generateRessources($root)) {
+                        return $this->generateSymLink($root);
+                    }
                 }
             }
         }
@@ -285,6 +294,8 @@ EOF;
 
     /**
      * Retourne le tempalte du fichier config/router.php
+     *
+     * @return string
      */
     public function getRouterFile() {
         $str = <<<EOF
@@ -319,9 +330,24 @@ EOF;
 
     /**
      * __toString retourne l'aide du module
+     *
+     * @return string
      */
     public function __toString() {
         return helper::init();
+    }
+
+    /**
+     * Génère le lien symbolique vers le binaire xengine
+     * @param string $root
+     *
+     * @return bool
+     */
+    public function generateSymLink($root) {
+        $target = $root . 'vendor' . DIRECTORY_SEPARATOR . 'pixxid' . DIRECTORY_SEPARATOR . 'xengine' . DIRECTORY_SEPARATOR . 'xengine';
+        $link = $root . 'xengine';
+
+        return symlink($target, $link);
     }
 
 }
