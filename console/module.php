@@ -78,7 +78,7 @@ class module {
                                 // Mise à jour du fichier config/router.php
                                 if ($this->updateRouterFile($moduleName)) {
                                     // Mise à jour du fichier .htaccess
-                                    if (file_put_contents($this->root . 'public' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . '.htaccess',
+                                    if (file_put_contents($this->root . 'public' . DIRECTORY_SEPARATOR . '.htaccess',
                                         "\r\nRewriteRule ^/{$moduleName}/(.*)$ /{$moduleName}/index.php [L]", FILE_APPEND)) {
                                         echo helper::success("Le module {$moduleName} a été initialisé !\r\n");
                                         echo helper::success("L'arborescence suivante a été créée :\r\n");
@@ -91,7 +91,7 @@ class module {
 ");
                                         return true;
                                     }
-                                    echo helper::warning("Impossible de mettre à jour le fichier public/vendor/.htaccess !\r\n");
+                                    echo helper::warning("Impossible de mettre à jour le fichier public/.htaccess !\r\n");
                                     return false;
                                 }
 
