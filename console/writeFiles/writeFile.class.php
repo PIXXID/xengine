@@ -3,14 +3,13 @@
 /**
  * Classe de gestion de fichier.
  *
- * @name    writeFile
+ * @name      writeFile
  * @author    D.M <dmeireles@pixxid.fr>
- * @copyright    D.M 18/09/2006
- * @package    xEngine.database.daogenerator
- * @version    1.0
+ * @copyright D.M 04/04/2016
+ * @version   1.0
  */
 
-namespace xEngine\daogenerator;
+namespace xEngine\Daogenerator;
 
 class writeFile
 {
@@ -28,28 +27,23 @@ class writeFile
     {
         $code = 0;
 
-        // Si on ce trouve sur windows, on remplace les "/" par des "\" pour que la creation
-        // des repertoires en mode recursif fonctionne.
-        if ((!empty($_SERVER["SystemRoot"])) && (substr_count(strtoupper($_SERVER["SystemRoot"]), 'WINDOW') > 0)) {
-            $folder = str_replace("/", "\\", $folder);
-        }
-
         try {
-            // Si le fichier n'a pas encore ete cree, on cre le repertoire de destination
+
+            // Si le fichier n'a pas encore été crée, on crée le répertoire de destination
             if (!is_dir($folder)) {
-                mkdir($folder, 0777, true);
+                mkdir($folder, 0755, true);
             }
 
-
-            // Creation du fichier en mode ecriture, effacement de l'ancien contenu
+            // Création du fichier en mode écriture, effacement de l'ancien contenu
             if (!$handle = fopen($folder . "" . $file, 'w')) {
                 $code = -1;
                 throw new Exception("Impossible d'ouvrir le fichier.");
             }
-            // Ecrivons quelque chose dans notre fichier.
+
+            // On écrit le contenu
             if (fwrite($handle, $txt) === FALSE) {
                 $code = -2;
-                throw new Exception("Impossible d'ecrire dans le fichier.");
+                throw new Exception("Impossible d'écrire dans le fichier.");
             }
 
             fclose($handle);

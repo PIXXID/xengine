@@ -10,7 +10,7 @@
  * @version    1.0
  */
 
-namespace xEngine\database;
+namespace xEngine\Database;
 
 class fieldDecimal extends column {
 
