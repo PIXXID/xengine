@@ -1,0 +1,93 @@
+# vim: set filetype=sh:
+#!/usr/bin/env bash
+_Xengine ()
+{
+    local cur prev pPrev
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    case "${prev}" in
+        'module')
+            COMPREPLY=( $( compgen -W 'create add remove redirect' -- $cur ) )
+            ;;
+        'dao')
+            COMPREPLY=( $( compgen -W 'generate' -- $cur ) )
+            ;;
+        # cette option ne doit être appelée qu'après dao, on vérifie donc sa position
+        'generate')
+            # generate doit être en 3e position (xengine dao generate)
+            if [ ${COMP_CWORD} -gt 2 ]
+            then
+                # On vérifie que le 2 fois précédent est bien dao
+                pPrev="${COMP_WORDS[COMP_CWORD-2]}"
+                __dao ${pPrev}
+            fi
+            ;;
+        # cette option ne doit être appelée qu'après module
+        'add')
+            if [ ${COMP_CWORD} -gt 2 ]
+            then
+                pPrev="${COMP_WORDS[COMP_CWORD-2]}"
+                if [ "$pPrev" == 'module' ]
+                then
+                    # On regarde si le répertoire ./public est présent
+                    if [ -d './public' ]
+                    then
+                        declare -a modules
+                        # On va maintenant lister les différents modules
+                        for i in $(ls -1 public/);
+                        do
+                            # On ne garde que les répertoires, et on exclue vendor
+                            if [ -d "public/$i" -a "$i" != "vendor" ]
+                            then
+                                # On vérifie que c'est la racine d'un module
+                                if [ -f "public/$i/route.xml" ]
+                                then
+                                    modules+="${i} "
+                                fi
+
+                                # On liste les sous modules éventuels
+                                for j in $(ls -1 public/$i);
+                                do
+                                    if [ -d "public/$i/$j" -a "$j" != "controllers" -a "$j" != "views" -a -f "public/$i/$j/route.xml" ]
+                                    then
+                                        modules+="${i}.${j} "
+                                    fi
+                                done
+                            fi
+                        done
+                        # on va lister les modules disponibles
+                        COMPREPLY=( $( compgen -W "$modules" -- $cur ) )
+                    fi
+                fi
+            fi
+            ;;
+        *)
+            if [ ${COMP_CWORD} == 1  ]
+            then
+                COMPREPLY=( $( compgen -W 'init module dao' -- $cur ) )
+
+            fi
+
+            if [ ${COMP_CWORD} -gt 2 ]
+            then
+                # On vérifie que le 2 fois précédent est bien dao
+                pPrev="${COMP_WORDS[1]}"
+                __dao ${pPrev}
+            fi
+            ;;
+    esac
+
+    return 0
+}
+
+__dao()
+{
+    if [ "$1" == 'dao' ]
+    then
+        COMPREPLY=( $( compgen -W '--all --business --dao --daocust --verbose' -- $cur ) )
+    fi
+}
+
+complete -F _Xengine -o filenames xengine
