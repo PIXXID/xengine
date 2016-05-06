@@ -157,21 +157,21 @@ class init {
         if (mkdir($root . 'public', 0755)) {
             // Création du répertoire public/vendor
             if (mkdir($root . 'public' . DIRECTORY_SEPARATOR . 'vendor', 0755)) {
-                // Création du fichier public/vendor/robots.txt
-                if (file_put_contents($root . 'public' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'robots.txt',
+                // Création du fichier public/robots.txt
+                if (file_put_contents($root . 'public' . DIRECTORY_SEPARATOR . 'robots.txt',
                     "User-agent: *\r\nDisallow:") !== false) {
-                    // Création du fichier public/vendor/.htaccess
-                    if (file_put_contents($root . 'public' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . '.htaccess',
+                    // Création du fichier public/.htaccess
+                    if (file_put_contents($root . 'public' . DIRECTORY_SEPARATOR . '.htaccess',
                         "Options +FollowSymLinks\r\nOptions -Indexes\r\nRewriteEngine On\r\nRewriteRule ^/admin/(.*)$ /admin/index.php [L]") !== false) {
                         return true;
                     }
 
-                    echo helper::warning("Impossible de créer le fichier public/vendor/.htaccess !\r\n");
+                    echo helper::warning("Impossible de créer le fichier public/.htaccess !\r\n");
                     return false;
 
                 }
 
-                echo helper::warning("Impossible de créer le fichier public/vendor/robots.txt !\r\n");
+                echo helper::warning("Impossible de créer le fichier public/robots.txt !\r\n");
                 return false;
 
             }
