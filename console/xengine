@@ -7,7 +7,7 @@
 namespace xEngine\Console;
 
 date_default_timezone_set('Europe/Paris');
-require_once(__DIR__ . '/console/helper.php');
+require_once(__DIR__ . DIRECTORY_SEPARATOR . 'helper.php');
 
 
 /**
@@ -17,7 +17,7 @@ function CreateComponent($argv) {
 
     try {
         $classname = '\xEngine\Console\\'. $argv[1];
-        $path = __DIR__ . "/console/" . $argv[1] . '.php';
+        $path = __DIR__ . DIRECTORY_SEPARATOR .  $argv[1] . '.php';
 
         if (file_exists($path)) {
             include_once($path);

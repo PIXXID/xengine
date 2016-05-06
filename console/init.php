@@ -90,7 +90,7 @@ class init {
      -- locale/
          -- fr_FR/
      -- models/\r\n");
-            echo helper::success("Un lien symbolique a été créé vers le binaire vendor/pixxid/xengine/xengine dans la racine de votre projet.\r\n");
+            echo helper::success("Un lien symbolique a été créé vers le binaire vendor/pixxid/xengine/console/xengine dans la racine de votre projet.\r\n");
 
             return true;
         }
@@ -344,7 +344,7 @@ EOF;
      * @return bool
      */
     public function generateSymLink($root) {
-        $target = $root . 'vendor' . DIRECTORY_SEPARATOR . 'pixxid' . DIRECTORY_SEPARATOR . 'xengine' . DIRECTORY_SEPARATOR . 'xengine';
+        $target = $root . 'vendor' . DIRECTORY_SEPARATOR . 'pixxid' . DIRECTORY_SEPARATOR . 'xengine' . DIRECTORY_SEPARATOR . 'console' . DIRECTORY_SEPARATOR . 'xengine';
         $link = $root . 'xengine';
 
         return symlink($target, $link);
