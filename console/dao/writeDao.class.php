@@ -219,7 +219,7 @@ EOF;
                 throw new Exception_(implode('-', \$stmt->errorInfo()));
             }
 
-            \$row = \$stmt->fetch(\\PDO::FETCH_ASSOC);
+            \$row = \$stmt->fetch(\\PDO::FETCH_NUM);
 
             if (\$row === false) {
                 return false;
