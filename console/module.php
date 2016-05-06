@@ -408,7 +408,7 @@ class $controllerName
     public function execute(DataCenter \$_DC)
     {
         try {
-        } catch (\\Exception_ \$e) {
+        } catch (Exception_ \$e) {
             \$_DC->addMessageError(\$e->getMessage());
         }
 
