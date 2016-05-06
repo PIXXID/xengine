@@ -12,9 +12,11 @@
 
 namespace xEngine\Daogenerator;
 
+require_once(dirname(__DIR__) . '/helper.php');
 require_once(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'tools' . DIRECTORY_SEPARATOR . 'String_.class.php');
 
 use \xEngine\Tools\String_;
+use \xEngine\Console\helper;
 
 class writeDaoCust
 {
@@ -24,25 +26,40 @@ class writeDaoCust
      * generer le script (ex : mysql)
      * @param string $tableName Nom de la table
      * @param array() $columns Liste des champs de la table
+     * @param bool $overWrite écrase le fichier si déjà existant
+     * @param bool $verbose affiche l'action en cours
      * @return int Code d'erreur
      */
-    public static function write($tableName, $columns)
+    public static function write($tableName, $columns, $overWrite = false, $verbose = false)
     {
         include(__DIR__ . DIRECTORY_SEPARATOR . 'datadict.inc.php');
 
         $class_name = String_::camelize($tableName);
 
-        $txt = "";
         $folder =  dirname(dirname(dirname(dirname(dirname(__DIR__))))) . DIRECTORY_SEPARATOR . 'ressources'
                 . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'daoCust' . DIRECTORY_SEPARATOR;
+
+        // Avant de générer le daoCust, on vérifie que le fichier n'existe pas déjà
+        if (file_exists($folder . $class_name . "DaoCust.class.php") && !$overWrite) {
+            if ($verbose) {
+                echo helper::warning("Le fichier daoCust de {$tableName} existe déjà.\r\n");
+            }
+            return 1;
+        }
+
+        if ($verbose) {
+            echo helper::info("Génération du fichier daoCust de {$tableName}\r\n");
+        }
+
         $businessClass = '/../business/' . $class_name . ".class.php";
+
         $sql_read = "";
         $i = 0;
 
         $date = date('d/m/Y');
 
         // Entete
-        $txt .= <<<EOF
+        $txt = <<<EOF
 <?php
 
 /**

@@ -15,43 +15,48 @@ require_once(__DIR__ . '/console/helper.php');
  */
 function CreateComponent($argv) {
 
-    $classname = '\xEngine\Console\\'. $argv[1];
-    $path = __DIR__ . "/console/" . $argv[1] . '.php';
+    try {
+        $classname = '\xEngine\Console\\'. $argv[1];
+        $path = __DIR__ . "/console/" . $argv[1] . '.php';
 
-    if (file_exists($path)) {
-        include_once($path);
+        if (file_exists($path)) {
+            include_once($path);
 
-        if (class_exists($classname)) {
-            $obj = new $classname();
+            if (class_exists($classname)) {
+                $obj = new $classname();
 
-            if (sizeof($argv) == 2) {
-                if (method_exists($obj, 'execute')) {
-                    $val = $obj->execute();
-                } else {
-                    echo $obj;
-                }
-            } else {
-                if (method_exists($obj, $argv[2])) {
-                    $code = '$val = $obj->' . $argv[2] . '(';
-                    foreach ($argv as $n => $arg) {
-                        if ($n > 2) {
-                            $code .= ($n > 3 ? ',' : '') . '$argv[' . $n . ']';
-                        }
+                if (sizeof($argv) == 2) {
+                    if (method_exists($obj, 'execute')) {
+                        $val = $obj->execute();
+                    } else {
+                        echo $obj;
                     }
-
-                    $code .= ');';
-                    eval($code);
                 } else {
-                    echo $obj;
+                    if (method_exists($obj, $argv[2])) {
+                        $code = '$val = $obj->' . $argv[2] . '(';
+                        foreach ($argv as $n => $arg) {
+                            if ($n > 2) {
+                                $code .= ($n > 3 ? ',' : '') . '$argv[' . $n . ']';
+                            }
+                        }
+
+                        $code .= ');';
+                        eval($code);
+                    } else {
+                        echo $obj;
+                    }
                 }
             }
         }
+    } catch (\Exception $e) {
+        echo helper::error($e->getMessage() . "\r\n");
+        return;
     }
 
     // En cas d'erreur, on affiche l'aide complète
     if (!is_object($obj)) {
         echo helper::help();
-        return -1;
+        return;
     }
 
     return $obj;

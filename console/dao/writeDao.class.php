@@ -11,9 +11,11 @@
 
 namespace xEngine\Daogenerator;
 
+require_once(dirname(__DIR__) . '/helper.php');
 require_once(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'tools' . DIRECTORY_SEPARATOR . 'String_.class.php');
 
 use \xEngine\Tools\String_;
+use \xEngine\Console\helper;
 
 class writeDao
 {
@@ -22,10 +24,15 @@ class writeDao
      * les requettes de base d'acces a la tabele.
      * @param string $tableName Nom de la table
      * @param array() $columns Liste des champs de la table
+     * @param bool $verbose affiche l'action en cours
      * @return int Code d'erreur
      */
-    public static function write($tableName, $columns)
+    public static function write($tableName, $columns, $verbose = false)
     {
+        if ($verbose) {
+            echo helper::info("Génération du fichier dao de {$tableName}\r\n");
+        }
+
         include(__DIR__ . DIRECTORY_SEPARATOR . 'datadict.inc.php');
 
         $class_name = String_::camelize($tableName);

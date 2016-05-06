@@ -58,20 +58,15 @@ class dao {
             $database = require($connFile);
             if (isset($database['connections'])) {
                 // Connexion à la BDD
-                try {
-                    $this->dbConnection = new DbConnection($database['connections']['mysql']['driver'],
-                        $database['connections']['mysql']['host'],
-                        $database['connections']['mysql']['username'],
-                        $database['connections']['mysql']['password'],
-                        $database['connections']['mysql']['port'],
-                        $database['connections']['mysql']['database'],
-                        $database['connections']['mysql']['charset']);
-                    $this->dbConnection->connect();
-                    $this->dbName = $database['connections']['mysql']['database'];
-                } catch (\Exception $e) {
-                    echo helper::error($e->getMessage() . "\r\n");
-                    return null;
-                }
+                $this->dbConnection = new DbConnection($database['connections']['mysql']['driver'],
+                    $database['connections']['mysql']['host'],
+                    $database['connections']['mysql']['username'],
+                    $database['connections']['mysql']['password'],
+                    $database['connections']['mysql']['port'],
+                    $database['connections']['mysql']['database'],
+                    $database['connections']['mysql']['charset']);
+                $this->dbConnection->connect();
+                $this->dbName = $database['connections']['mysql']['database'];
             } else {
                 echo helper::error("Le config/database.php est mal configuré ! Le champ 'connections' est introuvable.\r\n");
             }
@@ -96,6 +91,7 @@ class dao {
         $generateAllModels = false;
         $generateDao = false;
         $generateDaoCust = false;
+        $overWriteDaoCust = false;
         $generateBusiness = false;
         $verbose = false;
         $model = null;
@@ -124,6 +120,7 @@ class dao {
         // On génère les daoCust ?
         if ($option1 === '-dc' || $option2 === '-dc' || $option3 === '-dc' || $option4 === '-dc' || $option5 === '-dc') {
             $generateDaoCust = true;
+            $overWriteDaoCust = true;
         }
 
         // On génère les business ?
@@ -185,26 +182,17 @@ class dao {
 
             // Création du fichier business
             if ($generateBusiness) {
-                if ($verbose) {
-                    echo helper::info("Génération du fichier business de {$model}\r\n");
-                }
-                writeBusiness::write($model, $fullColumns);
+                writeBusiness::write($model, $fullColumns, $verbose);
             }
 
             // Création du fichier dao
             if ($generateDao) {
-                if ($verbose) {
-                    echo helper::info("Génération du fichier dao de {$model}\r\n");
-                }
-                writeDao::write($model, $fullColumns);
+                writeDao::write($model, $fullColumns, $verbose);
             }
 
             // Création du fichier daoCust
             if ($generateDaoCust) {
-                if ($verbose) {
-                    echo helper::info("Génération du fichier daoCust de {$model}\r\n");
-                }
-                writeDaoCust::write($model, $fullColumns);
+                writeDaoCust::write($model, $fullColumns, $overWriteDaoCust, $verbose);
             }
 
             } catch (\Exception $e) {
