@@ -64,7 +64,7 @@ class helper {
 
         if ($section === null) {
             $msg .= helper::success("php xengine module ")
-                 . helper::warning("[create|destroy|add|remove] moduleName (controllerName)")
+                 . helper::warning("[create|destroy|add|remove|redirect] moduleName (controllerName)")
                  . "\r\n";
         }
 
@@ -77,6 +77,7 @@ class helper {
 
         if ($section === null || $section === 'destroy') {
             $msg .= helper::warning("[destroy]\r\n")
+                . helper::warning("  Non implémentée\r\n")
                 . helper::success("  php xengine module destroy moduleName\r\n")
                 . helper::standard("    Suppression du module 'moduleName'")
                 . "\r\n";
@@ -93,6 +94,13 @@ class helper {
             $msg .= helper::warning("[remove]\r\n")
                 . helper::success("  php xengine module remove moduleName controllerName\r\n")
                 . helper::standard("    Suppression de l'action 'controllerName' dans le module 'moduleName'")
+                . "\r\n";
+        }
+
+        if ($section === null || $section === 'redirect') {
+            $msg .= helper::warning("[redirect]\r\n")
+                . helper::success("  php xengine module redirect moduleName\r\n")
+                . helper::standard("    Définit le module 'moduleName' comme module par défaut dans le fichier public/index.php")
                 . "\r\n";
         }
 

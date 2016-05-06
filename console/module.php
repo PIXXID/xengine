@@ -124,6 +124,7 @@ class module {
     }
 
     /**
+     * TODO
      * Suppression d'un module complet
      * @param string $moduleName
      *
@@ -285,6 +286,29 @@ class module {
     }
 
     /**
+     * Définit le module par défaut vers lequel redirige /public/index.php
+     * @param string $moduleName
+     *
+     * @return bool
+     */
+    public function redirect($moduleName) {
+        // On vérifie que le module existe
+        if (file_exists($this->modulesDir . $moduleName)) {
+            if (file_put_contents($this->modulesDir . 'index.php',
+                "<?php\r\n// Redirection sur le module par défaut\r\nheader(\"Location: /{$moduleName}/\");\r\nexit();") !== false) {
+                echo helper::success("Le module {$moduleName} a été défini comme module par défaut dans le fichier index.php.\r\n");
+                return true;
+            }
+
+            echo helper::warning("Impossible d'écrire le fichier index.php !\r\n");
+            return false;
+        }
+
+        echo helper::warning("Le module {$this->modulesDir}{$moduleName} n'existe pas !");
+        return false;
+    }
+
+    /**
      * __toString retourne l'aide du module
      */
     public function __toString() {
@@ -376,7 +400,7 @@ EOF;
  */
 
 
-use xEngine\DataCenter;
+use \\xEngine\DataCenter;
 
 class $controllerName
 {
