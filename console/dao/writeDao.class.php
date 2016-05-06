@@ -72,10 +72,10 @@ class writeDao
 
 namespace xEngine\Mapping\Dao;
 
-require_once(XENGINE_DIR . '/exception/PixException.class.php');
+require_once(XENGINE_DIR . '/exception/Exception_.class.php');
 require_once(__DIR__ . '{$businessClass}');
 
-use \\xEngine\Exception\PixException;
+use \\xEngine\Exception\Exception_;
 use \\xEngine\Database\\fieldString;
 use \\xEngine\Database\\fieldInt;
 use \\xEngine\Database\\fieldFloat;
@@ -182,12 +182,12 @@ EOF;
             \$stmt = \$this->conn->prepare(\$sql);
 
             if (\$stmt->execute() === false) {
-                throw new PixException(implode('-', \$stmt->errorInfo()));
+                throw new Exception_(implode('-', \$stmt->errorInfo()));
             }
 
             return \$stmt->fetchAll(\$fetch_style);
 
-        } catch (PixException \$e) {
+        } catch (Exception_ \$e) {
             \$this->message = \$e->getMessage();
             return null;
         }
@@ -216,7 +216,7 @@ EOF;
             \$stmt = \$this->conn->prepare(\$sql);
 
             if (!\$stmt->execute(array({$param_array}))) {
-                throw new PixException(implode('-', \$stmt->errorInfo()));
+                throw new Exception_(implode('-', \$stmt->errorInfo()));
             }
 
             \$row = \$stmt->fetch(\\PDO::FETCH_ASSOC);
@@ -228,7 +228,7 @@ $param_read
 
             return true;
 
-        } catch (PixException \$e) {
+        } catch (Exception_ \$e) {
             \$this->message = \$e->getMessage();
         }
 
@@ -258,10 +258,10 @@ EOF;
             \$stmt = \$this->conn->prepare(\$sql);
 
             if (\$stmt->execute(array({$array_insert})) === false) {
-                throw new PixException(implode('-', \$stmt->errorInfo()));
+                throw new Exception_(implode('-', \$stmt->errorInfo()));
             }
 
-        } catch (PixException \$e) {
+        } catch (Exception_ \$e) {
             \$this->message = \$e->getMessage();
 
             return false;
@@ -293,10 +293,10 @@ EOF;
             \$stmt = \$this->conn->prepare(\$sql);
 
             if (\$stmt->execute(array({$array_insert}, {$param_array})) === false) {
-                throw new PixException(implode('-', \$stmt->errorInfo()));
+                throw new Exception_(implode('-', \$stmt->errorInfo()));
             }
 
-        } catch (PixException \$e) {
+        } catch (Exception_ \$e) {
             \$this->message = \$e->getMessage();
 
             return false;
@@ -327,10 +327,10 @@ EOF;
             \$stmt = \$this->conn->prepare(\$sql);
 
             if (\$stmt->execute(array({$param_array})) === false) {
-                throw new PixException(implode('-', \$stmt->errorInfo()));
+                throw new Exception_(implode('-', \$stmt->errorInfo()));
             }
 
-        } catch (PixException \$e) {
+        } catch (Exception_ \$e) {
             \$this->message = \$e->getMessage();
 
             return false;

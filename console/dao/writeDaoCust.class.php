@@ -77,10 +77,10 @@ class writeDaoCust
 
 namespace xEngine\Mapping\DaoCust;
 
-require_once(XENGINE_DIR . '/exception/PixException.class.php');
+require_once(XENGINE_DIR . '/exception/Exception_.class.php');
 require_once(__DIR__ . '{$businessClass}');
 
-use \\xEngine\Exception\PixException;
+use \\xEngine\Exception\Exception_;
 use \\xEngine\Mapping\Business\\{$class_name};
 
 class {$class_name}DaoCust extends {$class_name}
@@ -157,12 +157,12 @@ EOF;
             \$stmt = \$this->conn->prepare(\$sql);
 
             if (\$stmt->execute() === false) {
-                throw new PixException(implode('-', \$stmt->errorInfo()));
+                throw new Exception_(implode('-', \$stmt->errorInfo()));
             }
 
             return \$stmt->fetchAll(\$fetch_style);
 
-        } catch (PixException \$e) {
+        } catch (Exception_ \$e) {
             \$this->message = \$e->getMessage();
             return null;
         }

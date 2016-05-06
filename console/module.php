@@ -401,13 +401,14 @@ EOF;
 
 
 use \\xEngine\DataCenter;
+use \\xEngine\Exception\Exception_;
 
 class $controllerName
 {
     public function execute(DataCenter \$_DC)
     {
         try {
-        } catch (\\Exception \$e) {
+        } catch (\\Exception_ \$e) {
             \$_DC->addMessageError(\$e->getMessage());
         }
 
