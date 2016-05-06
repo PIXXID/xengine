@@ -198,7 +198,7 @@ class module {
                 // On crée le controller controllers/*.controller.php
                 if (file_put_contents($controllersDir . "{$controllerName}.controller.php", $this->getControllerFile($controllerName)) !== false) {
                     // On crée la vue views/*.view.php
-                    if (file_put_contents($viewsDir . "{$controllerName}.view.php", $this->getViewFile("view")) !== false) {
+                    if (file_put_contents($viewsDir . "{$controllerName}.view.php", $this->getViewFile($controllerName)) !== false) {
                         // On met à jour le fichier route.xml
                         if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.xml', $controllerName)) {
                             echo helper::success("Le controller {$controllerName} a été crée !\r\n");
@@ -428,7 +428,19 @@ EOF;
      */
     public function getViewFile($viewName) {
         $str = <<<EOF
-<!-- Vue $viewName -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>{$viewName} - génération automatique</title>
+        <link rel="stylesheet" type="text/css" href="/public/vendor/css/" media="all" />
+    </head>
+    <body>
+        <h2>{$viewName}</h2>
+        <h3>Génération automatique</h3>
+    </body>
+    <script type="text/javascript" src="/public/vendor/javascript/"></script>
+</html>
 EOF;
 
         return $str;
