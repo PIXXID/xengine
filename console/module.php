@@ -36,6 +36,9 @@ class module {
      * @return bool
      */
     public function create($moduleName) {
+        // On regarde si le module est un sous module
+        $moduleName = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $moduleName);
+
         // On vérifie qu'un même module n'existe pas déjà
         if (!file_exists($this->modulesDir . $moduleName)) {
             /*
@@ -49,23 +52,23 @@ class module {
              */
 
             // Création du répertoire du module
-            if (mkdir($this->modulesDir . $moduleName, 0755)) {
+            if (mkdir($this->modulesDir . $moduleName, 0755, true)) {
                 // Création du répertoire controllers/
                 $controllersDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR;
-                if (!mkdir($controllersDir, 0755)) {
+                if (!mkdir($controllersDir, 0755, true)) {
                     echo helper::warning("Impossible de créer le répertoire {$controllersDir} !\r\n");
                     return false;
                 }
 
                 // Création du répertoire views/
                 $viewsDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;
-                if (!mkdir($viewsDir, 0755)) {
+                if (!mkdir($viewsDir, 0755, true)) {
                     echo helper::warning("Impossible de créer le répertoire {$viewsDir} !\r\n");
                     return false;
                 }
 
                 // Création du fichier index.php
-                if (file_put_contents($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'index.php', $this->getIndexFile()) !== false) {
+                if (file_put_contents($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'index.php', $this->getIndexFile($moduleName)) !== false) {
                     // Création du fichier route.xml
                     if (file_put_contents($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.xml', $this->getRouteFile($moduleName)) !== false) {
                         // Création du controller de base
@@ -290,10 +293,19 @@ class module {
 
     /*
      * Retourne le template du fichier index.php
+     * @param string $moduleName
      * @return string
      */
-    public function getIndexFile() {
+    public function getIndexFile($moduleName) {
         $date = date('d/m/Y');
+
+        // On calcule de combien de répertoires le fichier index.php doit remonter pour inclure le fichier index.php de
+        // xengine
+        $depth = '.' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
+        for ($i = 0; $i < substr_count($moduleName, DIRECTORY_SEPARATOR); $i++) {
+            $depth .= '..' . DIRECTORY_SEPARATOR;
+        }
+
         $str = <<<EOF
 <?php
 /**
@@ -305,7 +317,7 @@ class module {
  * @since     1.0
  * @author    x.x. <xx@pixxid.fr>
  */
-include('./../../vendor/pixxid/xengine/index.php');
+include('{$depth}vendor/pixxid/xengine/index.php');
 
 EOF;
 
@@ -317,10 +329,13 @@ EOF;
      * @return string
      */
     public function getRouteFile($moduleName) {
+        // On remplace common/login par common.login (par exemple)
+        $moduleNameConfig = str_replace(DIRECTORY_SEPARATOR, '.', $moduleName);
+
         $str = <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
-    <config name="$moduleName" version="1" debug="false" router="router" database="database">
+    <config name="$moduleNameConfig" version="1" debug="false" router="router" database="database">
         <controllers path="/$moduleName/controllers/" default="home" />
         <views path="/$moduleName/views/" />
         <themes name="default" path="/themes/" />
