@@ -76,6 +76,7 @@ class init {
      -- vendor/
      -- robots.txt
      -- .htacess
+     -- index.php
 -- ressources/
      -- assets/
          -- less/
@@ -163,7 +164,14 @@ class init {
                     // Création du fichier public/.htaccess
                     if (file_put_contents($root . 'public' . DIRECTORY_SEPARATOR . '.htaccess',
                         "Options +FollowSymLinks\r\nOptions -Indexes\r\nRewriteEngine On\r\nRewriteRule ^/admin/(.*)$ /admin/index.php [L]") !== false) {
-                        return true;
+                        // Création du fichier public/index.php
+                        if (file_put_contents($root . 'public' . DIRECTORY_SEPARATOR . 'index.php',
+                            "<?php\r\n// Redirection sur le module par défaut\r\nheader(\"Location: /path/to/module/\");\r\nexit();") !== false) {
+                            return true;
+                        }
+
+                        echo helper::warning("Impossible de générer le fichier public/index.php !\r\n");
+                        return false;
                     }
 
                     echo helper::warning("Impossible de créer le fichier public/.htaccess !\r\n");
