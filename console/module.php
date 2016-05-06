@@ -186,6 +186,9 @@ class module {
             return false;
         }
 
+        // On remplace le "." dans le nom du module par "/"
+        $moduleName = str_replace('.', DIRECTORY_SEPARATOR, $moduleName);
+
         // Répertoires des controllers et des vues
         $controllersDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR;
         $viewsDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR;

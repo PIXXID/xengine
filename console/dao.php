@@ -15,10 +15,10 @@ require_once(dirname(__DIR__) . '/database/types/fieldInt.class.php');
 require_once(dirname(__DIR__) . '/database/types/fieldString.class.php');
 require_once(dirname(__DIR__) . '/database/DbConnection.class.php');
 require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'tools' . DIRECTORY_SEPARATOR . 'String_.class.php');
-require_once(__DIR__ . '/dao/writeBusiness.class.php');
-require_once(__DIR__ . '/dao/writeDao.class.php');
-require_once(__DIR__ . '/dao/writeDaoCust.class.php');
-require_once(__DIR__ . '/dao/writeFile.class.php');
+require_once(__DIR__ . '/writeFiles/writeBusiness.class.php');
+require_once(__DIR__ . '/writeFiles/writeDao.class.php');
+require_once(__DIR__ . '/writeFiles/writeDaoCust.class.php');
+require_once(__DIR__ . '/writeFiles/writeFile.class.php');
 
 use \xEngine\Database\DbConnection;
 use \xEngine\Daogenerator\writeBusiness;
@@ -97,39 +97,39 @@ class dao {
         $model = null;
 
         // On génère tous les modèles ?
-        if ($option1 === '-a' || $option2 === '-a' || $option3 === '-a' || $option4 === '-a' || $option5 === '-a') {
+        if ($option1 === '--all' || $option2 === '--all' || $option3 === '--all' || $option4 === '--all' || $option5 === '--all') {
             $generateAllModels = true;
         // On regarde maintenant si un modèle particulier a été demandé
-        } elseif ($option1 != null && !in_array($option1, array('-a', '-b', '-d', '-dc', '-v'))) {
+        } elseif ($option1 != null && !in_array($option1, array('--all', '--business', '--dao', '--daocust', '--verbose'))) {
             $model = $option1;
-        } elseif ($option2 != null && !in_array($option2, array('-a', '-b', '-d', '-dc', '-v'))) {
+        } elseif ($option2 != null && !in_array($option2, array('--all', '--business', '--dao', '--daocust', '--verbose'))) {
             $model = $option2;
-        } elseif ($option3 != null && !in_array($option3, array('-a', '-b', '-d', '-dc', '-v'))) {
+        } elseif ($option3 != null && !in_array($option3, array('--all', '--business', '--dao', '--daocust', '--verbose'))) {
             $model = $option3;
-        } elseif ($option4 != null && !in_array($option4, array('-a', '-b', '-d', '-dc', '-v'))) {
+        } elseif ($option4 != null && !in_array($option4, array('--all', '--business', '--dao', '--daocust', '--verbose'))) {
             $model = $option4;
-        } elseif ($option5 != null && !in_array($option5, array('-a', '-b', '-d', '-dc', '-v'))) {
+        } elseif ($option5 != null && !in_array($option5, array('--all', '--business', '--dao', '--daocust', '--verbose'))) {
             $model = $option5;
         }
 
         // On génère les dao ?
-        if ($option1 === '-d' || $option2 === '-d' || $option3 === '-d' || $option4 === '-d' || $option5 === '-d') {
+        if ($option1 === '--dao' || $option2 === '--dao' || $option3 === '--dao' || $option4 === '--dao' || $option5 === '--dao') {
             $generateDao = true;
         }
 
         // On génère les daoCust ?
-        if ($option1 === '-dc' || $option2 === '-dc' || $option3 === '-dc' || $option4 === '-dc' || $option5 === '-dc') {
+        if ($option1 === '--daocust' || $option2 === '--daocust' || $option3 === '--daocust' || $option4 === '--daocust' || $option5 === '--daocust') {
             $generateDaoCust = true;
             $overWriteDaoCust = true;
         }
 
         // On génère les business ?
-        if ($option1 === '-b' || $option2 === '-b' || $option3 === '-b' || $option4 === '-b' || $option5 === '-b') {
+        if ($option1 === '--business' || $option2 === '--business' || $option3 === '--business' || $option4 === '--business' || $option5 === '--business') {
             $generateBusiness = true;
         }
 
         // On affiche le détail ?
-        if ($option1 === '-v' || $option2 === '-v' || $option3 === '-v' || $option4 === '-v' || $option5 === '-v') {
+        if ($option1 === '--verbose' || $option2 === '--verbose' || $option3 === '--verbose' || $option4 === '--verbose' || $option5 === '--verbose') {
             $verbose = true;
         }
 

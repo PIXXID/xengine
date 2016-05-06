@@ -129,14 +129,14 @@ class helper {
 
         if ($section === null || $section === 'generate') {
             $msg .= helper::warning("[generate]")
-                 . helper::success("  php xengine generate [-a|modelName] [-b] [-d] [-dc] [-v]\r\n")
+                 . helper::success("  php xengine generate [--all|modelName] [--business] [--dao] [--daocust] [--verbose]\r\n")
                  . helper::standard("  Génère tous les DAO non générés, ou bien seulement celui de 'modelName'\r\n")
-                 . helper::standard("    [-a] Tous les modèles\r\n")
+                 . helper::standard("    [--all] Tous les modèles\r\n")
                  . helper::standard("    [modelName] Pour le modèle 'modelName'\r\n")
-                 . helper::standard("    [-b] Fichiers business\r\n")
-                 . helper::standard("    [-d] Fichiers dao\r\n")
-                 . helper::standard("    [-dc] Fichiers daoCust\r\n")
-                 . helper::standard("    [-v] Affiche le détail")
+                 . helper::standard("    [--business] Fichiers business\r\n")
+                 . helper::standard("    [--dao] Fichiers dao\r\n")
+                 . helper::standard("    [--daocust] Fichiers daoCust\r\n")
+                 . helper::standard("    [--verbose] Affiche le détail")
                  . "\r\n";
         }
 
