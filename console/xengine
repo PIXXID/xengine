@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Gestion de l'application via la console
+ */
+
+namespace xEngine\Console;
+
+date_default_timezone_set('Europe/Paris');
+require_once(__DIR__ . DIRECTORY_SEPARATOR . 'helper.php');
+
+
+/**
+ * Charge dynamiquement les classes en fonction des paramètres de la console
+ */
+function CreateComponent($argv) {
+
+    try {
+        $classname = '\xEngine\Console\\'. $argv[1];
+        $path = __DIR__ . DIRECTORY_SEPARATOR .  $argv[1] . '.php';
+
+        if (file_exists($path)) {
+            include_once($path);
+
+            if (class_exists($classname)) {
+                $obj = new $classname();
+
+                if (sizeof($argv) == 2) {
+                    if (method_exists($obj, 'execute')) {
+                        $val = $obj->execute();
+                    } else {
+                        echo $obj;
+                    }
+                } else {
+                    if (method_exists($obj, $argv[2])) {
+                        $code = '$val = $obj->' . $argv[2] . '(';
+                        foreach ($argv as $n => $arg) {
+                            if ($n > 2) {
+                                $code .= ($n > 3 ? ',' : '') . '$argv[' . $n . ']';
+                            }
+                        }
+
+                        $code .= ');';
+                        eval($code);
+                    } else {
+                        echo $obj;
+                    }
+                }
+            }
+        }
+    } catch (\Exception $e) {
+        echo helper::error($e->getMessage() . "\r\n");
+        return;
+    }
+
+    // En cas d'erreur, on affiche l'aide complète
+    if (!is_object($obj)) {
+        echo helper::help();
+        return;
+    }
+
+    return $obj;
+}
+
+$command = CreateComponent($argv);
