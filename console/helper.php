@@ -42,7 +42,7 @@ class helper {
             $msg = helper::success("Usage : ");
         }
 
-        $msg .= helper::success("php xengine init\r\n")
+        $msg .= helper::success("xengine init\r\n")
              . helper::standard("    Initialisation du projet\r\n");
 
         return $msg;
@@ -63,14 +63,14 @@ class helper {
         }
 
         if ($section === null) {
-            $msg .= helper::success("php xengine module ")
+            $msg .= helper::success("xengine module ")
                  . helper::warning("[create|destroy|add|remove|redirect] moduleName (controllerName)")
                  . "\r\n";
         }
 
         if ($section === null || $section === 'create') {
             $msg .= helper::warning("[create]\r\n")
-                . helper::success("  php xengine module create moduleName\r\n")
+                . helper::success("  xengine module create moduleName\r\n")
                 . helper::standard("    Création de l'arborescence du module 'moduleName'")
                 . "\r\n";
         }
@@ -78,28 +78,28 @@ class helper {
         if ($section === null || $section === 'destroy') {
             $msg .= helper::warning("[destroy]\r\n")
                 . helper::warning("  Non implémentée\r\n")
-                . helper::success("  php xengine module destroy moduleName\r\n")
+                . helper::success("  xengine module destroy moduleName\r\n")
                 . helper::standard("    Suppression du module 'moduleName'")
                 . "\r\n";
         }
 
         if ($section === null || $section === 'add') {
             $msg .= helper::warning("[add]\r\n")
-                . helper::success("  php xengine module add moduleName controllerName\r\n")
+                . helper::success("  xengine module add moduleName controllerName\r\n")
                 . helper::standard("    Ajout de l'action 'controllerName' dans le module 'moduleName'")
                 . "\r\n";
         }
 
         if ($section === null || $section === 'remove') {
             $msg .= helper::warning("[remove]\r\n")
-                . helper::success("  php xengine module remove moduleName controllerName\r\n")
+                . helper::success("  xengine module remove moduleName controllerName\r\n")
                 . helper::standard("    Suppression de l'action 'controllerName' dans le module 'moduleName'")
                 . "\r\n";
         }
 
         if ($section === null || $section === 'redirect') {
             $msg .= helper::warning("[redirect]\r\n")
-                . helper::success("  php xengine module redirect moduleName\r\n")
+                . helper::success("  xengine module redirect moduleName\r\n")
                 . helper::standard("    Définit le module 'moduleName' comme module par défaut dans le fichier public/index.php")
                 . "\r\n";
         }
@@ -122,14 +122,14 @@ class helper {
         }
 
         if ($section === null) {
-            $msg .= helper::success("php xengine dao ")
+            $msg .= helper::success("xengine dao ")
                  . helper::warning("[generate] (modelName)")
                  . "\r\n";
         }
 
         if ($section === null || $section === 'generate') {
             $msg .= helper::warning("[generate]")
-                 . helper::success("  php xengine generate [--all|modelName] [--business] [--dao] [--daocust] [--verbose]\r\n")
+                 . helper::success("  xengine generate [--all|modelName] [--business] [--dao] [--daocust] [--verbose]\r\n")
                  . helper::standard("  Génère tous les DAO non générés, ou bien seulement celui de 'modelName'\r\n")
                  . helper::standard("    [--all] Tous les modèles\r\n")
                  . helper::standard("    [modelName] Pour le modèle 'modelName'\r\n")

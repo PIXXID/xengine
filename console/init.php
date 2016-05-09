@@ -89,7 +89,8 @@ class init {
          -- sass/
      -- locale/
          -- fr_FR/
-     -- models/\r\n");
+     -- models/
+-- .projections.json\r\n");
             echo helper::success("Un lien symbolique a été créé vers le binaire vendor/pixxid/xengine/console/xengine dans la racine de votre projet.\r\n");
 
             return true;
@@ -109,7 +110,9 @@ class init {
             if ($this->generateLogs($root)) {
                 if ($this->generatePublic($root)) {
                     if ($this->generateRessources($root)) {
-                        return $this->generateSymLink($root);
+                        if ($this->generateSymLink($root)) {
+                            return $this->generateProjectionsFile($root);
+                        }
                     }
                 }
             }
@@ -348,6 +351,60 @@ EOF;
         $link = $root . 'xengine';
 
         return symlink($target, $link);
+    }
+
+    /**
+     * Génération du fichier .projections.json pour vim
+     * @param string $root
+     *
+     * @return bool
+     */
+    public function generateProjectionsFile($root) {
+        $str = <<<EOF
+{
+    "*.controller.php": {
+        "type": "action",
+        "template": [
+            "<?php",
+            "",
+            "/**",
+            " *",
+            " *",
+            " * @copyright dd/mm/yyyy, Pixxid",
+            " * @licence   /LICENCE",
+            " *",
+            " * @link      TODO",
+            " * @since     V1",
+            " *",
+            " * @author    J.B. <jeremie@pixxid.fr>",
+            " */",
+            "",
+            "use \\\\xEngine\\\\DataCenter;",
+            "use \\\\xEngine\\\\Exception\\\\Exception_;",
+            "",
+            "class {basename}",
+            "{",
+            "    public function execute(DataCenter \$_DC)",
+            "    {",
+            "        try {",
+            "        } catch (Exception_ \$e) {",
+            "            \$_DC->addMessageError(\$e->getMessage());",
+            "        }",
+            "",
+            "        return;",
+            "    }",
+            "}"
+        ],
+        "alternate": "{dirname}/../views/{basename}.view.php"
+     },
+     "*.view.php": {
+         "type": "template",
+         "alternate": "{dirname}/../controllers/{basename}.controller.php"
+     }
+}
+EOF;
+
+        return file_put_contents($root . '.projections.json', $str);
     }
 
 }

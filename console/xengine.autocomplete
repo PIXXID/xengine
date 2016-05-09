@@ -26,42 +26,11 @@ _Xengine ()
             ;;
         # cette option ne doit être appelée qu'après module
         'add')
-            if [ ${COMP_CWORD} -gt 2 ]
-            then
-                pPrev="${COMP_WORDS[COMP_CWORD-2]}"
-                if [ "$pPrev" == 'module' ]
-                then
-                    # On regarde si le répertoire ./public est présent
-                    if [ -d './public' ]
-                    then
-                        declare -a modules
-                        # On va maintenant lister les différents modules
-                        for i in $(ls -1 public/);
-                        do
-                            # On ne garde que les répertoires, et on exclue vendor
-                            if [ -d "public/$i" -a "$i" != "vendor" ]
-                            then
-                                # On vérifie que c'est la racine d'un module
-                                if [ -f "public/$i/route.xml" ]
-                                then
-                                    modules+="${i} "
-                                fi
-
-                                # On liste les sous modules éventuels
-                                for j in $(ls -1 public/$i);
-                                do
-                                    if [ -d "public/$i/$j" -a "$j" != "controllers" -a "$j" != "views" -a -f "public/$i/$j/route.xml" ]
-                                    then
-                                        modules+="${i}.${j} "
-                                    fi
-                                done
-                            fi
-                        done
-                        # on va lister les modules disponibles
-                        COMPREPLY=( $( compgen -W "$modules" -- $cur ) )
-                    fi
-                fi
-            fi
+            __modList
+            ;;
+        # cette option ne doit être appelée qu'après module
+        'remove')
+            __modList
             ;;
         *)
             if [ ${COMP_CWORD} == 1  ]
@@ -82,6 +51,49 @@ _Xengine ()
     return 0
 }
 
+# Recherche les modules du projets
+__modList()
+{
+    if [ ${COMP_CWORD} -gt 2 ]
+    then
+        pPrev="${COMP_WORDS[COMP_CWORD-2]}"
+        if [ "$pPrev" == 'module' ]
+        then
+            # On regarde si le répertoire ./public est présent
+            if [ -d './public' ]
+            then
+                declare -a modules
+                # On va maintenant lister les différents modules
+                for i in $(ls -1 public/);
+                do
+                    # On ne garde que les répertoires, et on exclue vendor
+                    if [ -d "public/$i" -a "$i" != "vendor" ]
+                    then
+                        # On vérifie que c'est la racine d'un module
+                        if [ -f "public/$i/route.xml" ]
+                        then
+                            modules+="${i} "
+                        fi
+
+                        # On liste les sous modules éventuels
+                        for j in $(ls -1 public/$i);
+                        do
+                            if [ -d "public/$i/$j" -a "$j" != "controllers" -a "$j" != "views" -a -f "public/$i/$j/route.xml" ]
+                            then
+                                modules+="${i}.${j} "
+                            fi
+                        done
+                    fi
+                done
+                # on va lister les modules disponibles
+                COMPREPLY=( $( compgen -W "$modules" -- $cur ) )
+            fi
+        fi
+    fi
+
+}
+
+# Retourne les options pour xengine dao
 __dao()
 {
     if [ "$1" == 'dao' ]
