@@ -183,7 +183,7 @@ class helper {
     /**
      * Positionne la mise en forme
      */
-    public function color($color, $str) {
+    public static function color($color, $str) {
         return "{$color}{$str}" . helper::colorEnd;
     }
 }

@@ -12,6 +12,8 @@
 
 namespace xEngine;
 
+use xEngine\exception\Exception_;
+
 class Router {
 
     /**
@@ -59,7 +61,7 @@ class Router {
      * @access private
      * @var string
      */
-    private $configFile = 'route.xml';
+    private $configFile = 'route.php';
 
     /**
      * Fichiers de config à regénérer
@@ -113,7 +115,7 @@ class Router {
     /**
      * Initialisation du routeur.
      * Récupère l'ensemble des caches à regénérer, avec les routes correspondants
-     * 
+     *
      * @param type $routes
      * @param type $debug
      */
@@ -146,27 +148,28 @@ class Router {
         $cache = array();
         foreach ($this->cachePaths as $path => $routes) {
             foreach ($routes as $route) {
-                $configFile = DOCUMENT_ROOT . $route . $this->configFile;
-                if (file_exists($configFile)) {
-                    $config = simplexml_load_file($configFile);
-                    if (isset($config->controllers)) {
-                        $controllers = array();
-                        foreach ($config->controllers[0]->controller as $controller) {
-                            $params = array();
-                            if (isset($controller->param)) {
-                                foreach ($controller->param as $param) {
-                                    if (isset($param['required']) && (string) $param['required'] === 'true') {
-                                        $params[(string) $param['name']] = 'true';
-                                    } else {
-                                        $params[(string) $param['name']] = 'false';
-                                    }
+                if(file_exists(DOCUMENT_ROOT . $route . $this->configFile)) {
+                    $cfgRoute = require DOCUMENT_ROOT . $route . $this->configFile;
+                } else {
+                    continue;
+                }
+                if (isset($cfgRoute['controllers'])) {
+                    $controllers = array();
+                    foreach ($cfgRoute['controllers'] as $ctrlName => $controller) {
+                        $params = array();
+                        if (isset($controller['params'])) {
+                            foreach ($controller['params'] as $name => $values) {
+                                if (isset($values['required']) && $values['required'] === true) {
+                                    $params[$name] = 'true';
+                                } else {
+                                    $params[$name] = 'false';
                                 }
                             }
-                            $controllers[(string) $controller['name']] = array('path' => $route, 'params' => $params);
                         }
+                        $controllers[$ctrlName] = array('path' => $route, 'params' => $params);
                     }
-                    $cache[(string) $config->config[0]['name']] = $controllers;
                 }
+                $cache[$cfgRoute['name']] = $controllers;
             }
             // Ecriture du fichier de cache dans le répoertoire /config
             file_put_contents(CONFIG_DIR . $path, json_encode($cache));
@@ -285,6 +288,7 @@ class Router {
         }
 
         if (isset($this->cacheData[$route]) && isset($this->cacheData[$route][$controller])) {
+
             $controller_data = $this->cacheData[$route][$controller];
 
             $path = $controller_data['path'];

@@ -48,7 +48,7 @@ class module {
              *       -- controllers/
              *       -- views/
              *       index.php
-             *       route.xml
+             *       route.php
              */
 
             // Création du répertoire du module
@@ -69,8 +69,8 @@ class module {
 
                 // Création du fichier index.php
                 if (file_put_contents($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'index.php', $this->getIndexFile($moduleName)) !== false) {
-                    // Création du fichier route.xml
-                    if (file_put_contents($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.xml', $this->getRouteFile($moduleName)) !== false) {
+                    // Création du fichier route.php
+                    if (file_put_contents($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.php', $this->getRouteFile($moduleName)) !== false) {
                         // Création du controller de base
                         if (file_put_contents($controllersDir . "home.controller.php", $this->getControllerFile("home")) !== false) {
                             // Création de la vue du controller de base
@@ -79,7 +79,7 @@ class module {
                                 if ($this->updateRouterFile($moduleName)) {
                                     // Mise à jour du fichier .htaccess
                                     if (file_put_contents($this->root . 'public' . DIRECTORY_SEPARATOR . '.htaccess',
-                                        "\r\nRewriteRule ^/{$moduleName}/(.*)$ /{$moduleName}/index.php [L]", FILE_APPEND)) {
+                                        "\r\nRewriteRule ^{$moduleName}/(.*)$ {$moduleName}/index.php [L]", FILE_APPEND)) {
                                         echo helper::success("Le module {$moduleName} a été initialisé !\r\n");
                                         echo helper::success("L'arborescence suivante a été créée :\r\n");
                                         echo helper::info("-- public/
@@ -87,7 +87,7 @@ class module {
        -- controllers/
        -- views/
        index.php
-       route.xml
+       route.php
 ");
                                         return true;
                                     }
@@ -107,7 +107,7 @@ class module {
                         return false;
                     }
 
-                    echo helper::warning("Impossible de créer le fichier {$this->modulesDir}{$moduleName}{DIRECTORY_SEPARATOR}route.xml !\r\n");
+                    echo helper::warning("Impossible de créer le fichier {$this->modulesDir}{$moduleName}{DIRECTORY_SEPARATOR}route.php !\r\n");
                     return false;
                 }
 
@@ -203,12 +203,12 @@ class module {
                     // On crée la vue views/*.view.php
                     if (file_put_contents($viewsDir . "{$controllerName}.view.php", $this->getViewFile($controllerName)) !== false) {
                         // On met à jour le fichier route.xml
-                        if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.xml', $controllerName)) {
+                        if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.php', $controllerName)) {
                             echo helper::success("Le controller {$controllerName} a été crée !\r\n");
                             return true;
                         }
 
-                        echo helper::warning("Impossible de mettre à jour le fichier {$this->modulesDir}{$moduleName}/route.xml !\r\n");
+                        echo helper::warning("Impossible de mettre à jour le fichier {$this->modulesDir}{$moduleName}/route.php !\r\n");
                         return false;
                     }
 
@@ -267,12 +267,12 @@ class module {
                     }
 
                     // On met à jour le fichier route.xml
-                    if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.xml', $controllerName, false)) {
+                    if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.php', $controllerName, false)) {
                         echo helper::success("Le controller a bien été supprimé.\r\n");
                         return true;
                     }
 
-                    echo helper::warning("Impossible de mettre à jour le fichier {$this->modulesDir}{$moduleName}/route.xml !\r\n");
+                    echo helper::warning("Impossible de mettre à jour le fichier {$this->modulesDir}{$moduleName}/route.php !\r\n");
                     return false;
                 }
 
@@ -324,7 +324,6 @@ class module {
      * @return string
      */
     public function getIndexFile($moduleName) {
-        $date = date('d/m/Y');
 
         // On calcule de combien de répertoires le fichier index.php doit remonter pour inclure le fichier index.php de
         // xengine
@@ -335,16 +334,41 @@ class module {
 
         $str = <<<EOF
 <?php
-/**
- * Controlleur générique
- *
- * @name      index.php
- * @copyright x.x. $date
- * @licence   /LICENCE.txt
- * @since     1.0
- * @author    x.x. <xx@pixxid.fr>
- */
-include('{$depth}vendor/pixxid/xengine/index.php');
+require './../../vendor/pixxid/xengine/App.php';
+
+// * New Application module
+\$app = new \\xEngine\App;
+// \$app->version = 1;
+// \$app->debug = false;
+
+// * Database config
+\$app->database = 'database';
+
+// * Controller config
+\$app->controller->path = '/manager/controllers/';
+\$app->controller->default = 'home';
+// \$app->controller->before = 'home';
+// \$app->controller->after = 'home';
+
+// * View config
+\$app->view->path = '/manager/views/';
+
+// * Theme config
+// $app->theme->name = 'default';
+
+// * Lang config
+\$app->lang->active = false;
+// \$app->lang->domain = 'common';
+// \$app->lang->default = 'fr_FR';
+// \$app->lang->encoding = 'UTF-8';
+
+// * Authentification
+\$app->signup->required = false;
+// \$app->signup->action = 'identification';
+// \$app->signup->suffix = '';
+
+// * Run !!!!
+\$app->run();
 
 EOF;
 
@@ -360,21 +384,28 @@ EOF;
         $moduleNameConfig = str_replace(DIRECTORY_SEPARATOR, '.', $moduleName);
 
         $str = <<<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<document>
-    <config name="$moduleNameConfig" version="1" debug="false" router="router" database="database">
-        <controllers path="/$moduleName/controllers/" default="home" />
-        <views path="/$moduleName/views/" />
-        <themes name="default" path="/themes/" />
-        <language active="true" domain="common" default="fr_FR" encoding="UTF-8" />
-    </config>
-    <controllers>
-        <controller name="home" lib="Page d'accueil du module" />
-    </controllers>
-    <properties>
-        <!--property name="" value="" /-->
-    </properties>
-</document>
+<?php
+return [
+    'name' => '{$moduleNameConfig}',
+    'controllers' => [
+        'home' => [
+            'label' => 'Page d\'accueil du module',
+            'view' => null,
+            'forlder' => null,
+            'signup' => null,
+            'redirect' => null,
+            'params' => [
+                'name' => [
+                    'required' => false,
+                    'regexp' => null,
+                ],
+            ]
+        ]
+    ],
+    'properties' => [
+        'name' => 'value'
+    ]
+];
 EOF;
 
         return $str;
@@ -436,13 +467,11 @@ EOF;
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>{$viewName} - génération automatique</title>
-        <link rel="stylesheet" type="text/css" href="/public/vendor/css/" media="all" />
     </head>
     <body>
         <h2>{$viewName}</h2>
         <h3>Génération automatique</h3>
     </body>
-    <script type="text/javascript" src="/public/vendor/javascript/"></script>
 </html>
 EOF;
 
@@ -476,17 +505,21 @@ EOF;
 
             $fileContent = implode($lines);
 
+            // On supprime le cache
+            array_map('unlink', glob($this->root . "config/*.cache.*"));
+
             // On ré écrit le fichier
             if (file_put_contents($this->root . 'config/router.php', $fileContent) !== false) {
                 return true;
             }
+
         }
 
         return false;
     }
 
     /**
-     * Mise à jour du fichier route.xml
+     * Mise à jour du fichier route.php
      * @param string $routeFile
      * @param string $controllerName
      * @param bool $add
@@ -495,6 +528,8 @@ EOF;
      */
     public function updateRouteFile($routeFile, $controllerName, $add = true) {
         // On charge le fichier xml
+        // TODO - A REVOIR
+        /*
         if (($xml = simplexml_load_file($routeFile)) !== false) {
             // Si c'est un ajout
             if ($add) {
@@ -530,6 +565,12 @@ EOF;
 
         echo helper::warning("Impossible de lire le fichier {$routeFile} !\r\n");
         return false;
+        */
+
+        // On supprime le cache
+        array_map('unlink', glob($this->root . "config/*.cache.*"));
+
+        return true;
     }
 }
 

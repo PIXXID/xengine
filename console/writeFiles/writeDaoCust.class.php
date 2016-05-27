@@ -75,13 +75,13 @@ class writeDaoCust
  * @author    D.M <dmeireles@pixxid.fr>
  */
 
-namespace xEngine\Mapping\DaoCust;
+namespace xEngine\Models\DaoCust;
 
 require_once(XENGINE_DIR . '/exception/Exception_.class.php');
 require_once(__DIR__ . '{$businessClass}');
 
 use \\xEngine\Exception\Exception_;
-use \\xEngine\Mapping\Business\\{$class_name};
+use \\xEngine\Models\Business\\{$class_name};
 
 class {$class_name}DaoCust extends {$class_name}
 {

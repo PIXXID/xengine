@@ -692,9 +692,9 @@ class DataCenter {
     public function executeController($name, $folder = null) {
 
         if (!empty($folder)) {
-            $file_name = DOCUMENT_ROOT . "/" . $folder . "/" . $name . '.controller.php';
+            $file_name = DOCUMENT_ROOT . $folder . $name . '.controller.php';
         } else {
-            $file_name = DOCUMENT_ROOT . "/" . $this->folderController . "/" . $name . '.controller.php';
+            $file_name = DOCUMENT_ROOT . $this->folderController . $name . '.controller.php';
         }
 
         if (file_exists($file_name)) {
@@ -854,7 +854,7 @@ class DataCenter {
 
     /**
      * Lecture du libellé traduit
-     * 
+     *
      * @param type $label
      * @param type $domain
      * @param type $lang
