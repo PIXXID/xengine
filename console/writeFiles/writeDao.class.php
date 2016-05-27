@@ -70,7 +70,7 @@ class writeDao
  * @author     D.M <dmeireles@pixxid.fr>
  */
 
-namespace xEngine\Mapping\Dao;
+namespace xEngine\Models\Dao;
 
 require_once(XENGINE_DIR . '/exception/Exception_.class.php');
 require_once(__DIR__ . '{$businessClass}');
@@ -81,7 +81,7 @@ use \\xEngine\Database\\fieldInt;
 use \\xEngine\Database\\fieldFloat;
 use \\xEngine\Database\\fieldDate;
 use \\xEngine\Database\\fieldDecimal;
-use \\xEngine\Mapping\Business\\{$class_name};
+use \\xEngine\Models\Business\\{$class_name};
 
 class {$class_name}Dao extends $class_name
 {

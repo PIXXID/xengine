@@ -63,7 +63,7 @@ class writeBusiness
  * @author     D.M <dmeireles@pixxid.fr>
  */
 
-namespace xEngine\Mapping\Business;
+namespace xEngine\Models\Business;
 
 require_once(XENGINE_DIR . '/database/types/fieldString.class.php');
 require_once(XENGINE_DIR . '/database/types/fieldInt.class.php');

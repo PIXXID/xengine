@@ -14,7 +14,7 @@
  * -- ressources/
  *      -- assets/
  *          -- less/
- *          -- php/
+ *          -- js/
  *          -- sass/
  *      -- locale/
  *          -- fr_FR/
@@ -78,6 +78,7 @@ class init {
      -- router.php
 -- logs/
 -- public/
+     -- assets/
      -- vendor/
      -- robots.txt
      -- .htacess
@@ -85,10 +86,11 @@ class init {
 -- ressources/
      -- assets/
          -- less/
-         -- php/
          -- sass/
+         -- js/
      -- locale/
          -- fr_FR/
+            -- LC_MESSAGES/
      -- models/
 -- .projections.json\r\n");
             echo helper::success("Un lien symbolique a été créé vers le binaire vendor/pixxid/xengine/console/xengine dans la racine de votre projet.\r\n");
@@ -168,6 +170,13 @@ class init {
     public function generatePublic($root) {
         // Création du répertoire public/
         if (mkdir($root . 'public', 0755)) {
+
+            // Création du répertoire public/vendor
+            if (!mkdir($root . 'public' . DIRECTORY_SEPARATOR . 'assets', 0755)) {
+                echo helper::warning("Impossible de créer le répertoire public/assets/ !\r\n");
+                return false;
+            }
+
             // Création du répertoire public/vendor
             if (mkdir($root . 'public' . DIRECTORY_SEPARATOR . 'vendor', 0755)) {
                 // Création du fichier public/robots.txt
@@ -214,15 +223,14 @@ class init {
             // Création du répertoires ressources/assets
             if (mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'assets', 0755)) {
                 // Création du répertoire ressources/assets/less/
-                /*
-                 *if (!mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'less', 0755)) {
-                 *    echo helper::warning("Impossible de créer le répertoire ressources/assets/less/ !\r\n");
-                 *    return false;
-                 *}
-                 */
-                // Création du répertoire ressources/assets/php/
-                if (!mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'php', 0755)) {
-                    echo helper::warning("Impossible de créer le répertoire ressources/assets/php/ !\r\n");
+                if (!mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'less', 0755)) {
+                    echo helper::warning("Impossible de créer le répertoire ressources/assets/less/ !\r\n");
+                    return false;
+                }
+
+                // Création du répertoire ressources/assets/js/
+                if (!mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'js', 0755)) {
+                    echo helper::warning("Impossible de créer le répertoire ressources/assets/js/ !\r\n");
                     return false;
                 }
                 // Création du répertoire ressources/assets/sass/
@@ -236,11 +244,17 @@ class init {
                     // Création du répertoire ressources/locale/fr_FR
                     if (mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'locale' . DIRECTORY_SEPARATOR . 'fr_FR', 0755)) {
                         // Création du répertoire ressources/models
-                        if (mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'models', 0755)) {
-                            return true;
+                        if (mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'locale' . DIRECTORY_SEPARATOR . 'fr_FR' . DIRECTORY_SEPARATOR . 'LC_MESSAGES', 0755)) {
+                            // Création du répertoire ressources/models
+                            if (mkdir($root . 'ressources' . DIRECTORY_SEPARATOR . 'models', 0755)) {
+                                return true;
+                            }
+
+                            echo helper::warning("Impossible de créer le répertoire ressources/models/ !\r\n");
+                            return false;
                         }
 
-                        echo helper::warning("Impossible de créer le répertoire ressources/models/ !\r\n");
+                        echo helper::warning("Impossible de créer le répertoire ressources/locale/fr_FR/LC_MESSAGES !\r\n");
                         return false;
                     }
 
