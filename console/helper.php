@@ -144,6 +144,36 @@ class helper {
         return $msg;
     }
 
+    /**
+     * Aide du theme
+     * @param bool $full
+     * @param string|null $section
+
+     * @return string
+     */
+    public static function theme($full = true, $section = null) {
+        if ($full) {
+            $msg = helper::info("[theme]\r\n");
+        } else {
+            $msg = helper::success("Usage : ");
+        }
+
+        if ($section === null) {
+            $msg .= helper::success("xengine theme ")
+                 . helper::warning("[add] (themeName)")
+                 . "\r\n";
+        }
+
+        if ($section === null || $section === 'add') {
+            $msg .= helper::warning("[add]")
+                 . helper::success("  xengine theme add\r\n")
+                 . helper::standard("  Crée le dossier pour le thème 'themeName'")
+                 . "\r\n";
+        }
+
+        return $msg;
+    }
+
     // Gestion de la mise en forme
 
     /**
