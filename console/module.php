@@ -357,7 +357,7 @@ require './../../vendor/pixxid/xengine/App.php';
 \$app->view->path = '/manager/views/';
 
 // * Theme config
-// $app->theme->name = 'default';
+// \$app->theme->name = 'default';
 
 // * Lang config
 \$app->lang->active = false;
