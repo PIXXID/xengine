@@ -43,7 +43,7 @@ Initialisation du projet
 ### xengine module [create|add|remove|redirect] moduleName (controllerName) ###
 
 * `xengine module create moduleName` Création de l'arborescence du module 'moduleName'
-* `xengine module add moduleName controllerName` Ajoute le controller 'controllerName' au module 'moduleName'
+* `xengine module add moduleName controllerName [controllerRedirect]` Ajoute le controller 'controllerName' au module 'moduleName'
 * `xengine module remove moduleName controllerName` Supprime le controller 'controllerName' du module 'moduleName'
 * `xengine module redirect moduleName` Définit le module 'moduleName' comme module par défaut dans le fichier public/index.php
 
@@ -54,6 +54,9 @@ Initialisation du projet
     - --dao Fichiers dao
     - --daocust Fichiers daoCust
     - --verbose Affiche le détail
+
+### xengine theme add themeName ###
+* `xengine theme add themeName` Génère le répertoire et les fichiers principaux du thème 'themeName'
 
 
 ### Autocomplétion ###
