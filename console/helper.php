@@ -130,7 +130,7 @@ class helper {
 
         if ($section === null || $section === 'generate') {
             $msg .= helper::warning("[generate]")
-                 . helper::success("  xengine generate [--all|modelName] [--business] [--dao] [--daocust] [--verbose]\r\n")
+                 . helper::success("  xengine dao generate [--all|modelName] [--business] [--dao] [--daocust] [--verbose]\r\n")
                  . helper::standard("  Génère tous les DAO non générés, ou bien seulement celui de 'modelName'\r\n")
                  . helper::standard("    [--all] Tous les modèles\r\n")
                  . helper::standard("    [modelName] Pour le modèle 'modelName'\r\n")
