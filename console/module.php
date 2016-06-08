@@ -391,7 +391,7 @@ return [
         'home' => [
             'label' => 'Page d\'accueil du module',
             'view' => null,
-            'forlder' => null,
+            'folder' => null,
             'signup' => null,
             'redirect' => null,
             'params' => [
@@ -529,48 +529,62 @@ EOF;
     public function updateRouteFile($routeFile, $controllerName, $add = true) {
         // On charge le fichier xml
         // TODO - A REVOIR
-        /*
-        if (($xml = simplexml_load_file($routeFile)) !== false) {
+        if (($lines = file($routeFile)) !== false) {
             // Si c'est un ajout
             if ($add) {
-                // On ajoute le controller
-                $child = $xml->controllers->addChild('controller');
+                $newLines = <<<EOF
+        '{$controllerName}' => [
+            'label' => 'Page d\'accueil du module',
+            'view' => null,
+            'folder' => null,
+            'signup' => null,
+            'redirect' => null,
+            'params' => []
+        ],
 
-                // On positionne les attributs
-                $child->addAttribute('name', $controllerName);
-                $child->addAttribute('lib', "Controller pour {$controllerName}");
-            // Sinon c'est une suppression
-            } else {
-                $index = 0;
-                // On boucle sur les $controllers jusqu'à trouver celui qui correspond
-                foreach ($xml->controllers->controller as $controller) {
-                    // On le supprime
-                    if ((string)$controller['name'] === $controllerName) {
-                        unset($xml->controllers->controller[$index]);
+EOF;
+                // On boucle sur les lignes pour trouver 'controllers' => [
+                foreach ($lines as $index => $line) {
+                    if (strpos($line, "'controllers' => [") !== false) {
+                        array_splice($lines, $index + 1, 0, [$newLines]);
                         break;
                     }
-
-                    $index++;
                 }
+
+                $fileContent = implode($lines);
+            // Sinon c'est une suppression
+            } else {
+                // On boucle sur les lignes pour trouver 'controllerName' => [
+                $startLine = 0;
+                $endLine = 0;
+                foreach ($lines as $index => $line) {
+                    if (strpos($line, "'{$controllerName}' => [") !== false) {
+                        $startLine = $index;
+                    }
+                    // Si l'on a trouvé le début, on cherche :
+                    // 'properties' => [
+                    // ]; (fin du fichier)
+                    // 'label' => ' (controller suivant)
+                    if ($startLine !== 0 && (strpos($line, "'properties' =>") || strpos($line, "];") !== false || strpos($line, "'label' => '")) !== false && ($index - 1 > $startLine)) {
+                        $endLine = $index - 1;
+                        break;
+                    }
+                }
+
+                $fileContent = implode(array_merge(array_slice($lines, 0, $startLine), array_slice($lines, $endLine)));
             }
 
-            // On enregistre
-            if ($xml->asXML($routeFile) !== false) {
+            // On supprime le cache
+            array_map('unlink', glob($this->root . "config/*.cache.*"));
+
+            // On ré écrit le fichier
+            if (file_put_contents($routeFile, $fileContent) !== false) {
                 return true;
             }
-
-            echo helper::warning("Impossible d'enregistrer le fichier {$routeFile} !\r\n");
-            return false;
         }
 
         echo helper::warning("Impossible de lire le fichier {$routeFile} !\r\n");
         return false;
-        */
-
-        // On supprime le cache
-        array_map('unlink', glob($this->root . "config/*.cache.*"));
-
-        return true;
     }
 }
 
