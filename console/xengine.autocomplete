@@ -14,6 +14,9 @@ _Xengine ()
         'dao')
             COMPREPLY=( $( compgen -W 'generate' -- $cur ) )
             ;;
+        'theme')
+            COMPREPLY=( $( compgen -W 'add' -- $cur ) )
+            ;;
         # cette option ne doit être appelée qu'après dao, on vérifie donc sa position
         'generate')
             # generate doit être en 3e position (xengine dao generate)
@@ -35,7 +38,7 @@ _Xengine ()
         *)
             if [ ${COMP_CWORD} == 1  ]
             then
-                COMPREPLY=( $( compgen -W 'init module dao' -- $cur ) )
+                COMPREPLY=( $( compgen -W 'init module dao theme' -- $cur ) )
 
             fi
 
@@ -70,7 +73,7 @@ __modList()
                     if [ -d "public/$i" -a "$i" != "vendor" ]
                     then
                         # On vérifie que c'est la racine d'un module
-                        if [ -f "public/$i/route.xml" ]
+                        if [ -f "public/$i/route.php" ]
                         then
                             modules+="${i} "
                         fi
@@ -78,7 +81,7 @@ __modList()
                         # On liste les sous modules éventuels
                         for j in $(ls -1 public/$i);
                         do
-                            if [ -d "public/$i/$j" -a "$j" != "controllers" -a "$j" != "views" -a -f "public/$i/$j/route.xml" ]
+                            if [ -d "public/$i/$j" -a "$j" != "controllers" -a "$j" != "views" -a -f "public/$i/$j/route.php" ]
                             then
                                 modules+="${i}.${j} "
                             fi

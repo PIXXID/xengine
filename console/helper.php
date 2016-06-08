@@ -85,8 +85,9 @@ class helper {
 
         if ($section === null || $section === 'add') {
             $msg .= helper::warning("[add]\r\n")
-                . helper::success("  xengine module add moduleName controllerName\r\n")
-                . helper::standard("    Ajout de l'action 'controllerName' dans le module 'moduleName'")
+                . helper::success("  xengine module add moduleName controllerName [controllerRedirect]\r\n")
+                . helper::standard("    Ajout de l'action 'controllerName' dans le module 'moduleName'\r\n")
+                . helper::standard("    [controllerRedirect] controller vers lequel 'controllerName' redirige dans route.php")
                 . "\r\n";
         }
 
@@ -129,7 +130,7 @@ class helper {
 
         if ($section === null || $section === 'generate') {
             $msg .= helper::warning("[generate]")
-                 . helper::success("  xengine generate [--all|modelName] [--business] [--dao] [--daocust] [--verbose]\r\n")
+                 . helper::success("  xengine dao generate [--all|modelName] [--business] [--dao] [--daocust] [--verbose]\r\n")
                  . helper::standard("  Génère tous les DAO non générés, ou bien seulement celui de 'modelName'\r\n")
                  . helper::standard("    [--all] Tous les modèles\r\n")
                  . helper::standard("    [modelName] Pour le modèle 'modelName'\r\n")
@@ -137,6 +138,36 @@ class helper {
                  . helper::standard("    [--dao] Fichiers dao\r\n")
                  . helper::standard("    [--daocust] Fichiers daoCust\r\n")
                  . helper::standard("    [--verbose] Affiche le détail")
+                 . "\r\n";
+        }
+
+        return $msg;
+    }
+
+    /**
+     * Aide du theme
+     * @param bool $full
+     * @param string|null $section
+
+     * @return string
+     */
+    public static function theme($full = true, $section = null) {
+        if ($full) {
+            $msg = helper::info("[theme]\r\n");
+        } else {
+            $msg = helper::success("Usage : ");
+        }
+
+        if ($section === null) {
+            $msg .= helper::success("xengine theme ")
+                 . helper::warning("[add] (themeName)")
+                 . "\r\n";
+        }
+
+        if ($section === null || $section === 'add') {
+            $msg .= helper::warning("[add]")
+                 . helper::success("  xengine theme add\r\n")
+                 . helper::standard("  Crée le dossier pour le thème 'themeName'")
                  . "\r\n";
         }
 
