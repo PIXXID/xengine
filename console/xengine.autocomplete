@@ -70,7 +70,7 @@ __modList()
                     if [ -d "public/$i" -a "$i" != "vendor" ]
                     then
                         # On vérifie que c'est la racine d'un module
-                        if [ -f "public/$i/route.xml" ]
+                        if [ -f "public/$i/route.php" ]
                         then
                             modules+="${i} "
                         fi
@@ -78,7 +78,7 @@ __modList()
                         # On liste les sous modules éventuels
                         for j in $(ls -1 public/$i);
                         do
-                            if [ -d "public/$i/$j" -a "$j" != "controllers" -a "$j" != "views" -a -f "public/$i/$j/route.xml" ]
+                            if [ -d "public/$i/$j" -a "$j" != "controllers" -a "$j" != "views" -a -f "public/$i/$j/route.php" ]
                             then
                                 modules+="${i}.${j} "
                             fi
