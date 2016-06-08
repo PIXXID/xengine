@@ -176,10 +176,11 @@ class module {
      * Ajoute un controller au module
      * @param string $moduleName
      * @param string $controllerName
+     * @param string|null $redirect
      *
      * @return bool
      */
-    public function add($moduleName = null, $controllerName = null) {
+    public function add($moduleName = null, $controllerName = null, $redirect = null) {
         // On vérifie les paramètres
         if ($moduleName == null || $controllerName == null) {
             echo helper::module(false, 'add');
@@ -200,19 +201,21 @@ class module {
                             . DIRECTORY_SEPARATOR . $controllerName . '.controller.php')) {
                 // On crée le controller controllers/*.controller.php
                 if (file_put_contents($controllersDir . "{$controllerName}.controller.php", $this->getControllerFile($controllerName)) !== false) {
-                    // On crée la vue views/*.view.php
-                    if (file_put_contents($viewsDir . "{$controllerName}.view.php", $this->getViewFile($controllerName)) !== false) {
-                        // On met à jour le fichier route.xml
-                        if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.php', $controllerName)) {
-                            echo helper::success("Le controller {$controllerName} a été crée !\r\n");
-                            return true;
+                    // On crée la vue views/*.view.php s'il n'y a pas de redirect
+                    if ($redirect === null) {
+                        if (file_put_contents($viewsDir . "{$controllerName}.view.php", $this->getViewFile($controllerName)) === false) {
+                            echo helper::warning("Impossible de créer le fichier {$viewsDir}{$controllerName}.view.php !\r\n");
+                            return false;
                         }
-
-                        echo helper::warning("Impossible de mettre à jour le fichier {$this->modulesDir}{$moduleName}/route.php !\r\n");
-                        return false;
                     }
 
-                    echo helper::warning("Impossible de créer le fichier {$viewsDir}{$controllerName}.view.php !\r\n");
+                    // On met à jour le fichier route.php
+                    if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.php', $controllerName, true, $redirect)) {
+                        echo helper::success("Le controller {$controllerName} a été crée !\r\n");
+                        return true;
+                    }
+
+                    echo helper::warning("Impossible de mettre à jour le fichier {$this->modulesDir}{$moduleName}/route.php !\r\n");
                     return false;
                 }
 
@@ -523,22 +526,28 @@ EOF;
      * @param string $routeFile
      * @param string $controllerName
      * @param bool $add
+     * @param string|null $redirect
      *
      * @return bool
      */
-    public function updateRouteFile($routeFile, $controllerName, $add = true) {
+    public function updateRouteFile($routeFile, $controllerName, $add = true, $redirect = null) {
         // On charge le fichier xml
-        // TODO - A REVOIR
         if (($lines = file($routeFile)) !== false) {
             // Si c'est un ajout
             if ($add) {
+                if ($redirect) {
+                    $redirectStr = "'{$redirect}'";
+                } else {
+                    $redirectStr = "null";
+                }
+
                 $newLines = <<<EOF
         '{$controllerName}' => [
             'label' => 'Page d\'accueil du module',
             'view' => null,
             'folder' => null,
             'signup' => null,
-            'redirect' => null,
+            'redirect' => {$redirectStr},
             'params' => []
         ],
 

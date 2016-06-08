@@ -85,8 +85,9 @@ class helper {
 
         if ($section === null || $section === 'add') {
             $msg .= helper::warning("[add]\r\n")
-                . helper::success("  xengine module add moduleName controllerName\r\n")
-                . helper::standard("    Ajout de l'action 'controllerName' dans le module 'moduleName'")
+                . helper::success("  xengine module add moduleName controllerName [controllerRedirect]\r\n")
+                . helper::standard("    Ajout de l'action 'controllerName' dans le module 'moduleName'\r\n")
+                . helper::standard("    [controllerRedirect] controller vers lequel 'controllerName' redirige dans route.php")
                 . "\r\n";
         }
 
