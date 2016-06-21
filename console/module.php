@@ -348,13 +348,13 @@ require './../../vendor/pixxid/xengine/App.php';
 \$app->database = 'database';
 
 // * Controller config
-\$app->controller->path = '/manager/controllers/';
+\$app->controller->path = '/{$moduleName}/controllers/';
 \$app->controller->default = 'home';
 // \$app->controller->before = 'home';
 // \$app->controller->after = 'home';
 
 // * View config
-\$app->view->path = '/manager/views/';
+\$app->view->path = '/{$moduleName}/views/';
 
 // * Theme config
 // \$app->theme->name = 'default';
