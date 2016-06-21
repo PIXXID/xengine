@@ -182,6 +182,11 @@ class DataCenter {
      * @return void
      */
     public function set($name, $value) {
+        // Si la méthode HTTP utilisée est GET, on repositionne les paramètres dans la variable globale
+        // $_GET
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $_GET[$name] = $value;
+        }
         $this->vars[$name] = $value;
     }
 
