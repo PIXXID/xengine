@@ -543,7 +543,7 @@ EOF;
 
                 $newLines = <<<EOF
         '{$controllerName}' => [
-            'label' => 'Page d\'accueil du module',
+            'label' => 'Controller {$controllerName}',
             'view' => null,
             'folder' => null,
             'signup' => null,
