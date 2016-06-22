@@ -337,7 +337,7 @@ class module {
 
         $str = <<<EOF
 <?php
-require './../../vendor/pixxid/xengine/App.php';
+require '{$depth}vendor/pixxid/xengine/App.php';
 
 // * New Application module
 \$app = new \\xEngine\App;
