@@ -143,7 +143,7 @@ EOF;
     /**
      * Liste de tous les éléments de la table
      *
-     * @name " . $class_name . "DaoCust::readAll()
+     * @name {$class_name}DaoCust::readAll()
      * @access public
      * @param int \$fetch_style \\PDO::FETCH_*
      *

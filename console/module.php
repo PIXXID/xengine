@@ -337,7 +337,7 @@ class module {
 
         $str = <<<EOF
 <?php
-require './../../vendor/pixxid/xengine/App.php';
+require '{$depth}vendor/pixxid/xengine/App.php';
 
 // * New Application module
 \$app = new \\xEngine\App;
@@ -543,7 +543,7 @@ EOF;
 
                 $newLines = <<<EOF
         '{$controllerName}' => [
-            'label' => 'Page d\'accueil du module',
+            'label' => 'Controller {$controllerName}',
             'view' => null,
             'folder' => null,
             'signup' => null,

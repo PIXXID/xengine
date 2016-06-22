@@ -54,6 +54,9 @@ namespace xEngine;
  use xEngine\exception\Exception_;
  use xEngine\html\Head;
 
+// Active les sessions
+@session_start();
+
  class App
  {
      /**
@@ -392,7 +395,7 @@ namespace xEngine;
                      }
 
                      // Execution du controller demandé
-                     if ($actJump == false) {
+                     if ($actJump === false) {
                          $_DC->getDebugger()->addBreakPoint("Ctrl Start '".$controllerToRun."'");
                          $_DC->executeController($controllerToRun, $lFolderController);
                          $_DC->getDebugger()->addBreakPoint("Ctrl Stop '".$controllerToRun."'");
