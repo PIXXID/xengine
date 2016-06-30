@@ -297,7 +297,13 @@ class module {
      *
      * @return bool
      */
-    public function redirect($moduleName) {
+    public function redirect($moduleName = null) {
+        // On vérifie qu'un moduleName a été passé
+        if ($moduleName === null) {
+            echo helper::module(false, 'redirect');
+            return false;
+        }
+
         // On vérifie que le module existe
         if (file_exists($this->modulesDir . $moduleName)) {
             if (file_put_contents($this->modulesDir . 'index.php',
