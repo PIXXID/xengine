@@ -491,8 +491,9 @@ EOF;
         // On lit le contenu du fichier, chaque ligne un élément de tableau
         if (($lines = file($this->root . 'config/router.php')) !== false) {
             // Contenu qui va être ajouté
+            $name = str_replace('/', '.', $moduleName);
             $newLines = <<<EOF
-        '$moduleName' => [
+        '$name' => [
             'path' => '/$moduleName/',
             'cache_name' => 'router.cache.json'
         ],
