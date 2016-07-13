@@ -35,7 +35,12 @@ class module {
 
      * @return bool
      */
-    public function create($moduleName) {
+    public function create($moduleName = null) {
+        if ($moduleName === null) {
+            echo helper::module(false, 'create');
+            return false;
+        }
+
         // On regarde si le module est un sous module
         $moduleName = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $moduleName);
 
