@@ -35,7 +35,12 @@ class theme {
      *
      * @return bool
      */
-    public function add($themeName) {
+    public function add($themeName = null) {
+        if ($themeName === null) {
+            echo helper::theme(false, 'add');
+            return false;
+        }
+
         $themeDir = $this->themesDir . $themeName . DIRECTORY_SEPARATOR;
         // On vérifie que le thème n'existe pas déjà
         if (!file_exists($themeDir)) {
