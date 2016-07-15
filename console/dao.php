@@ -273,7 +273,7 @@ class dao {
 
             // type du champ
             $types = explode("(", $item[1]);
-            $column->setType($item[0]);
+            $column->setType($types[0]);
 
             // Longeur du champ
             if ((is_array($types)) && (sizeof($types) > 1)) {
