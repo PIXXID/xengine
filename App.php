@@ -28,7 +28,6 @@ namespace xEngine;
  define('MODELS_DIR', APPS_ROOT.'/ressources/models/');
  define('VENDOR_DIR', APPS_ROOT.'/vendor/');
  define('PUBLIC_DIR', APPS_ROOT.'/public/');
- define('PUBLIC_ASSETS_DIR', APPS_ROOT.'/public/assets/');
 
  require XENGINE_DIR.'/database/DbConnection.class.php';
  require XENGINE_DIR.'/database/types/column.class.php';
@@ -200,15 +199,15 @@ namespace xEngine;
 
              // Gestion du thème
              if (!empty($this->theme)) {
-                 $_DC->setTheme(new Theme($this->theme->name, PUBLIC_ASSETS_DIR));
+                 $_DC->setTheme(new Theme($this->theme->name, '/assets'));
                  if (empty($this->theme->css)) {
                      $this->theme->css = 'default.css';
                  }
                  if (empty($this->theme->js)) {
                      $this->theme->js = 'default.js';
                  }
-                 $_DC->getHead()->setThemeLink($_DC->getTheme()->getUrl().'/'.$this->theme->css);
-                 $_DC->getHead()->setThemeScript($_DC->getTheme()->getUrl().'/'.$this->theme->js);
+                 $_DC->getHead()->setThemeLink($_DC->getTheme()->getUrl() . $this->theme->css);
+                 $_DC->getHead()->setThemeScript($_DC->getTheme()->getUrl() . $this->theme->js);
              } else {
                  $_DC->setTheme(new Theme('defaut', null));
              }
