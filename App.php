@@ -95,6 +95,12 @@ namespace xEngine;
       */
      public $view = null;
      /**
+      * Format de la vue
+      *
+      * @var name
+      */
+     public $output = null;
+     /**
       * Force l'authentification.
       *
       * @var name
@@ -327,6 +333,10 @@ namespace xEngine;
                  if (isset($cfgRoute['controllers'][$controllerToRun])) {
                      // Enregistrement des informations de configuration liées à Le controller
                      $ctrl = $cfgRoute['controllers'][$controllerToRun];
+                     // Format de la vue
+                     if (isset($ctrl['output'])) {
+                         $this->output = $ctrl['output'];
+                     }
                      $actName = $controllerToRun;
                      (!empty($ctrl['signup'])) ? $actSignup = $ctrl['signup'] : $actSignup = $cfgSignupRequire;
                      (!empty($ctrl['view'])) ? $_DC->setView($ctrl['view']) : $_DC->setView('');
@@ -413,6 +423,12 @@ namespace xEngine;
                              // Vue correspondante au controller d'originie
                              $viewFileName = $controllerToRun;
                          }
+
+                         // Retour en JSON
+                         if ($this->output === 'json') {
+                             header('Content-Type: application/json;charset=utf-8');
+                         }
+
                          // On inclue la vue
                          if (file_exists($_DC->includeView($viewFileName, $lFolderView)) == true) {
                              $_DC->getDebugger()->addBreakPoint("View Start '".$viewFileName."'");
@@ -454,8 +470,15 @@ namespace xEngine;
                  print_r($_DC->getDebugger()->getAlert());
              }
          } catch (Exception_ $e) {
+             if ($this->output !== 'json') {
+                 header('HTTP/1.0 400 Bad Request');
+                 echo "<!DOCTYPE html><html><head><title>HTTP/1.0 400 Bad Request</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head><body>{$e->getHtmlMessage()}</body></html>";
+                 die();
+             }
              header('HTTP/1.0 400 Bad Request');
-             echo "<!DOCTYPE html><html><head><title>HTTP/1.0 400 Bad Request</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head><body>{$e->getHtmlMessage()}</body></html>";
+             header('Content-Type: application/json;charset=utf-8');
+             $response = json_encode(['success' => false, 'message' => $e->getHtmlMessage()], JSON_UNESCAPED_UNICODE);
+             echo $response;
              die();
          }
 
