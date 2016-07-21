@@ -709,7 +709,7 @@ class DataCenter {
                 $controller = new $name();
                 $controller->execute($this);
             } catch (\Exception $e) {
-                $this->addMessageError($this->getText("Une erreur s'est produite lors de l'execution de l'inclusion du controller ") . $name . ' : ' . $e->getMessage());
+                $this->addMessageError($e->getMessage(), 'executeController');
                 return false;
             }
         } else {
