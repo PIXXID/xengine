@@ -205,7 +205,7 @@ namespace xEngine;
 
              // Gestion du thème
              if (!empty($this->theme)) {
-                 $_DC->setTheme(new Theme($this->theme->name, '/assets'));
+                 $_DC->setTheme(new Theme('/' . $this->theme->name . '/', '/assets'));
                  if (empty($this->theme->css)) {
                      $this->theme->css = 'default.css';
                  }
