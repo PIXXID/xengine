@@ -338,7 +338,7 @@ namespace xEngine;
                          $this->output = $ctrl['output'];
                      }
                      $actName = $controllerToRun;
-                     (!empty($ctrl['signup'])) ? $actSignup = $ctrl['signup'] : $actSignup = $cfgSignupRequire;
+                     (isset($ctrl['signup'])) ? $actSignup = $ctrl['signup'] : $actSignup = $cfgSignupRequire;
                      (!empty($ctrl['view'])) ? $_DC->setView($ctrl['view']) : $_DC->setView('');
                      if (!empty($ctrl['folder'])) {
                          $lFolderController = $ctrl['folder'];
