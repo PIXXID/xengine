@@ -1,6 +1,6 @@
 <?php
 /**
- * Gestion des modules (création, suppression, ajout d'action...)
+ * Gestion des modules (création, suppression, ajout de controllers...)
  */
 
 namespace xEngine\Console;
@@ -437,7 +437,7 @@ EOF;
 <?php
 /**
  *
- * @name      $controllerName.action.php
+ * @name      $controllerName.controller.php
  *
  * @copyright x.x. $date
  * @licence   /LICENCE.txt

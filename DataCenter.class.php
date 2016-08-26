@@ -173,6 +173,20 @@ class DataCenter {
     }
 
     /**
+     * Ajoute une nouvelle valeur dans le DataCenter, en JSON
+     *
+     * @name DataCenter::setJSON()
+     * @param string  $name    Nom de la variable
+     * @param string  $value Valeur
+     * @param string  $options Options de conversion
+     * @access public
+     * @return void
+     */
+    public function setJSON($name, $value, $options = JSON_UNESCAPED_UNICODE) {
+        $this->vars[$name] = json_encode($value, $options);
+    }
+
+    /**
      * Ajoute une nouvelle valeur dans le DataCenter
      *
      * @name DataCenter::set()
