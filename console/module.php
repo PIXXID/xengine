@@ -181,11 +181,12 @@ class module {
      * Ajoute un controller au module
      * @param string $moduleName
      * @param string $controllerName
-     * @param string|null $redirect
+     * @param string|null $option1
+     * @param string|null $option2
      *
      * @return bool
      */
-    public function add($moduleName = null, $controllerName = null, $redirect = null) {
+    public function add($moduleName = null, $controllerName = null, $option1 = null, $option2 = null) {
         // On vérifie les paramètres
         if ($moduleName == null || $controllerName == null) {
             echo helper::module(false, 'add');
@@ -194,6 +195,22 @@ class module {
 
         // On remplace le "." dans le nom du module par "/"
         $moduleName = str_replace('.', DIRECTORY_SEPARATOR, $moduleName);
+
+        // Gestion du redirect
+        if ($option1 === null || $option1 === '--json' && $option2 === null) {
+            $redirect = null;
+        } else if ($option1 !== null && $option1 !== '--json') {
+            $redirect = $option1;
+        } else if ($option2 !== null && $option2 !== '--json') {
+            $redirect = $option2;
+        }
+
+        // Gestion du --json
+        if ($option1 === '--json' || $option2 === '--json') {
+            $json = true;
+        } else {
+            $json = false;
+        }
 
         // Répertoires des controllers et des vues
         $controllersDir = $this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR;
@@ -205,17 +222,17 @@ class module {
             if (!file_exists($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'controllers'
                             . DIRECTORY_SEPARATOR . $controllerName . '.controller.php')) {
                 // On crée le controller controllers/*.controller.php
-                if (file_put_contents($controllersDir . "{$controllerName}.controller.php", $this->getControllerFile($controllerName)) !== false) {
+                if (file_put_contents($controllersDir . "{$controllerName}.controller.php", $this->getControllerFile($controllerName, $json)) !== false) {
                     // On crée la vue views/*.view.php s'il n'y a pas de redirect
                     if ($redirect === null) {
-                        if (file_put_contents($viewsDir . "{$controllerName}.view.php", $this->getViewFile($controllerName)) === false) {
+                        if (file_put_contents($viewsDir . "{$controllerName}.view.php", $this->getViewFile($controllerName, $json)) === false) {
                             echo helper::warning("Impossible de créer le fichier {$viewsDir}{$controllerName}.view.php !\r\n");
                             return false;
                         }
                     }
 
                     // On met à jour le fichier route.php
-                    if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.php', $controllerName, true, $redirect)) {
+                    if ($this->updateRouteFile($this->modulesDir . $moduleName . DIRECTORY_SEPARATOR . 'route.php', $controllerName, true, $redirect, $json)) {
                         echo helper::success("Le controller {$controllerName} a été crée !\r\n");
                         return true;
                     }
@@ -428,10 +445,74 @@ EOF;
     /**
      * Retourne le template d'un controller
      * @param string $controllerName
-
+     * @param bool $json
+     *
      * @return string
      */
-    public function getControllerFile($controllerName) {
+    public function getControllerFile($controllerName, $json = false) {
+        if ($json) {
+            return $this->getJSONControllerFile($controllerName);
+        }
+
+        return $this->getHTMLControllerFile($controllerName);
+    }
+
+    /**
+     * Retourne le template d'un controller pour du JSON
+     * @private
+     * @param string $controllerName
+     *
+     * @return string
+     */
+    private function getJSONControllerFile($controllerName) {
+        $date = date('d/m/Y');
+        $str = <<<EOF
+<?php
+/**
+ *
+ * @name      $controllerName.controller.php
+ *
+ * @copyright x.x. $date
+ * @licence   /LICENCE.txt
+ *
+ * @since     1.0
+ *
+ * @author    x.x. <xx@pixxid.fr>
+ */
+
+
+use \\xEngine\DataCenter;
+use \\xEngine\Exception\Exception_;
+
+class $controllerName
+{
+    public function execute(DataCenter \$_DC)
+    {
+        try {
+            \$result = ['success' => true];
+
+        } catch (Exception_ \$e) {
+            \$result = ['success' => false, 'message' => \$e->getMessage()];
+        }
+
+        \$_DC->setJSON('result', \$result);
+        return;
+    }
+}
+EOF;
+
+        return $str;
+    }
+
+
+    /**
+     * Retourne le template d'un controller pour du HTML
+     * @private
+     * @param string $controllerName
+     *
+     * @return string
+     */
+    private function getHTMLControllerFile($controllerName) {
         $date = date('d/m/Y');
         $str = <<<EOF
 <?php
@@ -471,10 +552,41 @@ EOF;
     /**
      * Retourne le template de la vue d'un controller
      * @param string $viewName
-
+     * @param bool $json
+     *
      * @return string
      */
-    public function getViewFile($viewName) {
+    public function getViewFile($viewName, $json = false) {
+        if ($json) {
+            return $this->getJSONViewFile($viewName);
+        }
+
+        return $this->getHTMLViewFile($viewName);
+    }
+
+    /**
+     * Retourne le template de la vue, en JSON
+     * @private
+     * @param string $viewName
+     *
+     * @return string
+     */
+    private function getJSONViewFile($viewName) {
+        $str = <<<EOF
+<?php echo \$_DC->get('result', false);
+EOF;
+
+        return $str;
+    }
+
+    /**
+     * Retourne le template de la vue, en HTML
+     * @private
+     * @param string $viewName
+     *
+     * @return string
+     */
+    private function getHTMLViewFile($viewName) {
         $str = <<<EOF
 <!DOCTYPE html>
 <html>
@@ -539,10 +651,11 @@ EOF;
      * @param string $controllerName
      * @param bool $add
      * @param string|null $redirect
+     * @param bool $json
      *
      * @return bool
      */
-    public function updateRouteFile($routeFile, $controllerName, $add = true, $redirect = null) {
+    public function updateRouteFile($routeFile, $controllerName, $add = true, $redirect = null, $json = false) {
         // On charge le fichier xml
         if (($lines = file($routeFile)) !== false) {
             // Si c'est un ajout
@@ -553,9 +666,12 @@ EOF;
                     $redirectStr = "null";
                 }
 
+                $output = $json ? 'json': 'html';
+
                 $newLines = <<<EOF
         '{$controllerName}' => [
             'label' => 'Controller {$controllerName}',
+            'output' => '{$output}',
             'view' => null,
             'folder' => null,
             'signup' => null,
