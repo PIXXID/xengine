@@ -1225,6 +1225,22 @@ class DataCenter {
     }
 
     /**
+     * Lecture des données envoyées en JSON en post
+     * @name DataCenter::setPHPInput()
+     * @access public
+     * @return void
+     */
+    public function setPHPInput() {
+        $input = file_get_contents('php://input');
+        $json_input = json_decode($input, true);
+
+        // On positionne toutes les valeurs dans le datacenter
+        foreach ($json_input as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
+
+    /**
      * Hash la chaîne de caractères passées en paramètre
      * @name DataCenter::hash()
      * @access public
