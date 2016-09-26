@@ -1235,8 +1235,10 @@ class DataCenter {
         $json_input = json_decode($input, true);
 
         // On positionne toutes les valeurs dans le datacenter
-        foreach ($json_input as $key => $value) {
-            $this->set($key, $value);
+        if (is_array($json_input)) {
+            foreach ($json_input as $key => $value) {
+                $this->set($key, $value);
+            }
         }
     }
 
