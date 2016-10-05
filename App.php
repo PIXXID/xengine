@@ -387,7 +387,11 @@ namespace xEngine;
                      if (($actSignup === true) && ($_DC->getSignup() == false)) {
                          // Si je ne recois pas de login, j'affiche la vue qui contient le formulaire
                          if (!isset($_POST['login'])) {
-                             $_DC->setView($cfgSignupController);
+                             if ($this->output !== 'json') {
+                                 $_DC->setView($cfgSignupController);
+                             } else {
+                                 $_DC->setView($cfgSignupController . '.json');
+                             }
                              $actJump = true;     // On saute Le controller demandee si aucune identification et pas de login
                          } else {
                              // Si je ne suis pas identifié et que je recois login
@@ -446,7 +450,7 @@ namespace xEngine;
                          ++$initController;
                      }
                  } else {
-                     throw new Exception_('Le controller "'.$controllerToRun."\" n'est pas definie dans le fichier de configuration !");
+                     throw new Exception_('Le controller "'.$controllerToRun."\" n'est pas défini dans le fichier de configuration !");
                  }
              }
 
