@@ -446,7 +446,7 @@ namespace xEngine;
                          ++$initController;
                      }
                  } else {
-                     throw new Exception_('Le controller "'.$controllerToRun."\" n'est pas definie dans le fichier de configuration !");
+                     throw new Exception_('Le controller "'.$controllerToRun."\" n'est pas défini dans le fichier de configuration !");
                  }
              }
 
