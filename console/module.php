@@ -492,7 +492,7 @@ class $controllerName
             \$result = ['success' => true];
 
         } catch (Exception_ \$e) {
-            \$result = ['success' => false, 'message' => \$e->getMessage()];
+            \$result = ['success' => false, 'message' => \$e->getMessage(), 'level' => \$e->getLevel()];
         }
 
         \$_DC->setJSON('result', \$result);
