@@ -59,10 +59,10 @@ class Date_ {
                 if (isset($lTime[1]))
                     $this->minute = $lTime[1];
                 if (isset($lTime[2]))
-                    $this->seconde = $lTime[2];
+                    $this->second = $lTime[2];
                 /*
                   if(strlen($heure) > 4) {
-                  list($this->hour, $this->minute, $this->seconde) = explode(":", $heure);
+                  list($this->hour, $this->minute, $this->second) = explode(":", $heure);
                   } */
             }
 
@@ -129,7 +129,7 @@ class Date_ {
         }
 
         if ($hour == true)
-            $date .= " " . $this->hour . ":" . $this->minute . ":" . $this->seconde;
+            $date .= " " . $this->hour . ":" . $this->minute . ":" . $this->second;
 
 
         return $date;
@@ -140,7 +140,7 @@ class Date_ {
      * @return String
      */
     public function getHours() {
-        $date = $this->hour . ":" . $this->minute . ":" . $this->seconde;
+        $date = $this->hour . ":" . $this->minute . ":" . $this->second;
         return $date;
     }
 
@@ -151,13 +151,13 @@ class Date_ {
      */
     public function addDays($nbre = 1) {
         $stampDay = $nbre * 86400; // 86400 = 24*60*60 = 1 jour
-        $timeLocal = strtotime($this->year . "-" . $this->month . "-" . $this->day . " " . $this->hour . ":" . $this->minute . ":" . $this->seconde) + $stampDay;
+        $timeLocal = strtotime($this->year . "-" . $this->month . "-" . $this->day . " " . $this->hour . ":" . $this->minute . ":" . $this->second) + $stampDay;
         $this->year = date("Y", $timeLocal);
         $this->month = date("m", $timeLocal);
         $this->day = date("d", $timeLocal);
         $this->hour = date("H", $timeLocal);
         $this->minute = date("i", $timeLocal);
-        $this->seconde = date("s", $timeLocal);
+        $this->second = date("s", $timeLocal);
         return;
     }
 
@@ -166,7 +166,7 @@ class Date_ {
      * @return timestamp
      */
     public function getTimestamp() {
-        $timeLocal = strtotime($this->year . "-" . $this->month . "-" . $this->day . " " . $this->hour . ":" . $this->minute . ":" . $this->seconde);
+        $timeLocal = strtotime($this->year . "-" . $this->month . "-" . $this->day . " " . $this->hour . ":" . $this->minute . ":" . $this->second);
         return $timeLocal;
     }
 
@@ -181,7 +181,7 @@ class Date_ {
             $this->day = date("d", $mtime);
             $this->hour = date("H", $mtime);
             $this->minute = date("i", $mtime);
-            $this->seconde = date("s", $mtime);
+            $this->second = date("s", $mtime);
         } else {
             return false;
         }
